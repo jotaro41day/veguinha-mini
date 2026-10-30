@@ -16,7 +16,7 @@ O objetivo é estudar como movimento, percepção e aprendizagem podem surgir da
 - Imagens de 320×180 por olho: centro nativo, anel intermediário amostrado a cada 2 pixels e bordas a cada 4 pixels, com transição suave. O estéreo usa somente os pixels centrais nativos.
 - Viewer web, raster, taxas regionais, pesos médios, ablações, parâmetros, métricas e checkpoints locais.
 
-**Marcha aprendida robusta ainda não foi demonstrada.** Ensaios curtos produziram oscilação e deslocamento com circuitos inatos, mas isso não comprova melhora por aprendizagem. Navegação, caça e manutenção corporal eficientes também continuam em investigação. Os mecanismos experimentais implementados não devem ser confundidos com capacidades já validadas.
+**O Veguinha já anda nas simulações.** Ainda falta demonstrar, contra os controles, quanto a plasticidade melhora essa marcha. Os circuitos inatos também produzem oscilação e deslocamento, portanto andar por si só não prova aprendizagem. Navegação, caça e manutenção corporal eficientes também continuam em investigação. Os mecanismos experimentais implementados não devem ser confundidos com capacidades já validadas.
 
 ## Instalação
 
@@ -76,4 +76,4 @@ Veja [arquitetura](docs/architecture.md), [resultados e limitações](docs/resul
 
 ## Contribuições
 
-Contribuições de diagnóstico, reprodução e correções são bem-vindas. Consulte [CONTRIBUTING.md](CONTRIBUTING.md). O código usa [licença MIT](LICENSE); os modelos mantêm suas licenças em [CREDITS.md](CREDITS.md).
+Contribuições de diagnóstico, reprodução e correções são bem-vindas. Consulte [CONTRIBUTING.md](CONTRIBUTING.md). O código usa [licença MIT](LICENSE). O corpo mk-1 foi modelado pelo próprio autor do projeto, [jotaro41day](https://github.com/jotaro41day), e disponibilizado sob CC0.

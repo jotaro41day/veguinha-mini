@@ -1,4 +1,4 @@
-"""The optional skin must not change the hexapod's dynamics."""
+"""The primitive control model preserves the original mechanical reference."""
 
 import json
 import unittest
@@ -14,6 +14,12 @@ FIXTURES = Path(__file__).with_name("fixtures")
 
 
 class VisualSkinTests(unittest.TestCase):
+    def test_control_body_uses_visible_primitives_without_mesh_assets(self):
+        model = MujocoBody().model
+        self.assertEqual(model.nmesh, 0)
+        for name in ('shell', 'head', 'antenna_l', 'antenna_r'):
+            self.assertEqual(model.geom_rgba[model.geom(name).id, 3], 1)
+
     def test_each_leg_has_tapered_visuals_on_both_joint_links(self):
         model = MujocoBody().model
         for leg in LEG_NAMES:

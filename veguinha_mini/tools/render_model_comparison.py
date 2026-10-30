@@ -1,4 +1,4 @@
-"""Render the original pre-Ladybird body beside the approved mk-1 visual GLB.
+"""Render the original primitive body beside the approved mk-1 visual GLB.
 
 This is a geometry-based orthographic illustration, not a neural/physics run.
 """
@@ -39,8 +39,7 @@ def old_meshes():
     result = []
     for geom_id in range(model.ngeom):
         name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_GEOM, geom_id) or ""
-        # The original pre-skin geoms remain in the MJCF. Their alpha was set
-        # to zero only when the Ladybird skin was added, so ignore alpha here.
+        # Group-zero primitives define the original physical control model.
         if model.geom_bodyid[geom_id] == 0 or model.geom_group[geom_id] != 0:
             continue
         kind = model.geom_type[geom_id]
@@ -130,8 +129,8 @@ def render_panel(meshes, label, title, caption, accent):
 
 
 def main():
-    old = render_panel(old_meshes(), "ANTES", "Corpo original", "Antes da joaninha · 2 juntas por perna", (65, 138, 139))
-    new = render_panel(new_meshes(), "DEPOIS", "mk-1 metálico", "Visual aprovado · física de 3 juntas pendente", (50, 104, 102))
+    old = render_panel(old_meshes(), "ANTES", "Corpo original", "Controle · 2 juntas por perna", (65, 138, 139))
+    new = render_panel(new_meshes(), "DEPOIS", "mk-1 metálico", "Modelo mk-1 · 3 juntas por perna", (50, 104, 102))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     old.save(OUT.with_name("modelo_original.png"), optimize=True)
     new.save(OUT.with_name("modelo_mk1.png"), optimize=True)

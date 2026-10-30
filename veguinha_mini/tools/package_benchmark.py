@@ -12,7 +12,6 @@ def package(destination):
                "mujoco_body", "sim", "motor", "sensory", "metrics", "learning")
     files = [root / (name + ".py") for name in modules]
     files += [root / "assets/hexapod.xml", root / "assets/hexapod_mk1.xml"]
-    files += sorted((root / "assets/ladybird").glob("*.obj"))
     files += sorted((root / "assets/mk1").glob("*.obj"))
     stream = io.BytesIO()
     with zipfile.ZipFile(stream, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
