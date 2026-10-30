@@ -1,0 +1,192 @@
+{
+  "device": "25078PC3EG",
+  "physics_unchanged": true,
+  "center_exact": true,
+  "optical_flow_identical": true,
+  "summary": {
+    "before": {
+      "mean_ms": 102.32712175275083,
+      "native_ms": 157.6940770028159,
+      "peripheral_ms": 84.6860769961495,
+      "native_rays": 36000,
+      "peripheral_rays": 7200
+    },
+    "after": {
+      "mean_ms": 266.2540190843477,
+      "native_ms": 312.26492300629616,
+      "peripheral_ms": 241.87353800516576,
+      "native_rays": 49452,
+      "peripheral_rays": 16812
+    }
+  },
+  "rows": [
+    {
+      "mode": "before",
+      "trial": 0,
+      "native": false,
+      "real_s": 0.08913546100666281,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 0,
+      "native": false,
+      "real_s": 0.26040953799383715,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 1,
+      "native": false,
+      "real_s": 0.23650361500040162,
+      "rays": 16812
+    },
+    {
+      "mode": "before",
+      "trial": 1,
+      "native": false,
+      "real_s": 0.0846860769961495,
+      "rays": 7200
+    },
+    {
+      "mode": "before",
+      "trial": 2,
+      "native": false,
+      "real_s": 0.0796730000001844,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 2,
+      "native": false,
+      "real_s": 0.222717538010329,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 3,
+      "native": true,
+      "real_s": 0.3015914619900286,
+      "rays": 49452
+    },
+    {
+      "mode": "before",
+      "trial": 3,
+      "native": true,
+      "real_s": 0.14121784700546414,
+      "rays": 36000
+    },
+    {
+      "mode": "before",
+      "trial": 4,
+      "native": false,
+      "real_s": 0.07502492300409358,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 4,
+      "native": false,
+      "real_s": 0.22020953899482265,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 5,
+      "native": false,
+      "real_s": 0.24187353800516576,
+      "rays": 16812
+    },
+    {
+      "mode": "before",
+      "trial": 5,
+      "native": false,
+      "real_s": 0.09221261499624234,
+      "rays": 7200
+    },
+    {
+      "mode": "before",
+      "trial": 6,
+      "native": false,
+      "real_s": 0.09209384600399062,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 6,
+      "native": false,
+      "real_s": 0.2499971539946273,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 7,
+      "native": true,
+      "real_s": 0.3426966160041047,
+      "rays": 49452
+    },
+    {
+      "mode": "before",
+      "trial": 7,
+      "native": true,
+      "real_s": 0.1576940770028159,
+      "rays": 36000
+    },
+    {
+      "mode": "before",
+      "trial": 8,
+      "native": false,
+      "real_s": 0.08853823100798763,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 8,
+      "native": false,
+      "real_s": 0.34843446100421716,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 9,
+      "native": false,
+      "real_s": 0.24945846101036295,
+      "rays": 16812
+    },
+    {
+      "mode": "before",
+      "trial": 9,
+      "native": false,
+      "real_s": 0.07882738500484265,
+      "rays": 7200
+    },
+    {
+      "mode": "before",
+      "trial": 10,
+      "native": false,
+      "real_s": 0.0784700759977568,
+      "rays": 7200
+    },
+    {
+      "mode": "after",
+      "trial": 10,
+      "native": false,
+      "real_s": 0.20889138399797957,
+      "rays": 16812
+    },
+    {
+      "mode": "after",
+      "trial": 11,
+      "native": true,
+      "real_s": 0.31226492300629616,
+      "rays": 49452
+    },
+    {
+      "mode": "before",
+      "trial": 11,
+      "native": true,
+      "real_s": 0.17035192300681956,
+      "rays": 36000
+    }
+  ]
+}

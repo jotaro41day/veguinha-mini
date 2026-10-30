@@ -1,0 +1,309 @@
+{
+  "status": "proposal_only_no_mjcf_or_network_change",
+  "scale_m_per_glb_unit": 0.17,
+  "reference_old_2_joint_link_lengths_m": {
+    "hip_to_knee": 0.22051077071199945,
+    "knee_to_toe": 0.18027756377319948
+  },
+  "mass_kg": {
+    "trunk": 0.196,
+    "head": 0.016,
+    "tail": 0.008,
+    "coxa_per_leg": 0.005,
+    "femur_per_leg": 0.005,
+    "tibia_per_leg": 0.006
+  },
+  "total_mass_kg": 0.316,
+  "center_of_mass_glb": [
+    -1.318854,
+    0.10408,
+    0.008728
+  ],
+  "center_of_mass_mujoco_m": [
+    -1.177705,
+    -0.001484,
+    0.198094
+  ],
+  "equal_foot_load_target_newtons": 0.51666,
+  "neurons_per_module": {
+    "old_total": 128,
+    "old_motor": 32,
+    "old_interneuron_E": 54,
+    "old_interneuron_I": 42,
+    "proposed_total": 144,
+    "proposed_motor": 48,
+    "proposed_interneuron_E": 50,
+    "proposed_interneuron_I": 46
+  },
+  "mapping": {
+    "old_hip": "new_femur",
+    "old_knee": "new_tibia",
+    "new_coxa": "new_flexor_extensor_pair"
+  },
+  "legs": {
+    "LF": {
+      "lengths_glb": [
+        0.472524,
+        0.656243,
+        1.243265
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211355
+      ],
+      "hip_pivot_glb": [
+        -0.699575,
+        0.17782,
+        0.410663
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "femur": [
+          -0.837786,
+          -0.545998,
+          0.0
+        ],
+        "tibia": [
+          -0.813201,
+          -0.581982,
+          0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.018964,
+        "femur_reach": 0.010028,
+        "tibia_reach": 0.017037
+      },
+      "foot_world_glb": [
+        0.031142,
+        -0.92055,
+        1.564629
+      ]
+    },
+    "LM": {
+      "lengths_glb": [
+        0.472523,
+        0.656244,
+        1.243131
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211332
+      ],
+      "hip_pivot_glb": [
+        -1.392781,
+        0.177083,
+        0.481741
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "femur": [
+          -0.999258,
+          0.038509,
+          0.0
+        ],
+        "tibia": [
+          -0.999991,
+          -0.004292,
+          0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.023202,
+        "femur_reach": 0.010035,
+        "tibia_reach": 0.017039
+      },
+      "foot_world_glb": [
+        -1.46432,
+        -0.921777,
+        1.845282
+      ]
+    },
+    "LH": {
+      "lengths_glb": [
+        0.472523,
+        0.656244,
+        1.243138
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211333
+      ],
+      "hip_pivot_glb": [
+        -2.053979,
+        0.177515,
+        0.277923
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "femur": [
+          -0.774605,
+          0.632445,
+          0.0
+        ],
+        "tibia": [
+          -0.800893,
+          0.598807,
+          0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.018481,
+        "femur_reach": 0.010024,
+        "tibia_reach": 0.017035
+      },
+      "foot_world_glb": [
+        -2.933317,
+        -0.920503,
+        1.322872
+      ]
+    },
+    "RF": {
+      "lengths_glb": [
+        0.472524,
+        0.656243,
+        1.2431
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211327
+      ],
+      "hip_pivot_glb": [
+        -0.668991,
+        0.17945,
+        -0.427739
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          -0.0,
+          0.0,
+          -1.0
+        ],
+        "femur": [
+          0.796658,
+          -0.60443,
+          -0.0
+        ],
+        "tibia": [
+          0.77121,
+          -0.636581,
+          -0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.018013,
+        "femur_reach": 0.009959,
+        "tibia_reach": 0.016996
+      },
+      "foot_world_glb": [
+        0.143685,
+        -0.914436,
+        -1.529736
+      ]
+    },
+    "RM": {
+      "lengths_glb": [
+        0.472524,
+        0.656243,
+        1.243132
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211333
+      ],
+      "hip_pivot_glb": [
+        -1.34837,
+        0.17945,
+        -0.445136
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          -0.0,
+          0.0,
+          -1.0
+        ],
+        "femur": [
+          0.999408,
+          -0.034406,
+          -0.0
+        ],
+        "tibia": [
+          0.997038,
+          -0.076904,
+          -0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.023217,
+        "femur_reach": 0.009953,
+        "tibia_reach": 0.01699
+      },
+      "foot_world_glb": [
+        -1.320214,
+        -0.914097,
+        -1.814523
+      ]
+    },
+    "RH": {
+      "lengths_glb": [
+        0.472524,
+        0.656243,
+        1.243339
+      ],
+      "lengths_m": [
+        0.080329,
+        0.111561,
+        0.211368
+      ],
+      "hip_pivot_glb": [
+        -2.017671,
+        0.17945,
+        -0.283449
+      ],
+      "joint_axes_mujoco": {
+        "coxa": [
+          -0.0,
+          0.0,
+          -1.0
+        ],
+        "femur": [
+          0.818977,
+          0.573827,
+          0.0
+        ],
+        "tibia": [
+          0.843567,
+          0.537025,
+          0.0
+        ]
+      },
+      "positive_0p1rad_displacements_m": {
+        "coxa_forward": 0.019524,
+        "femur_reach": 0.009959,
+        "tibia_reach": 0.016996
+      },
+      "foot_world_glb": [
+        -2.819184,
+        -0.914454,
+        -1.393728
+      ]
+    }
+  }
+}

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veguinha mini · laboratório 3D</title>
+  <style>
+    head, style, script, title, meta, link { display:none !important; }
+    :root { color-scheme: dark; --bg:#0b1118; --panel:#131d27; --line:#293847; --text:#e9f0ef; --muted:#a7b7bc; --mint:#65ddc3; --amber:#f3bc68; --pink:#ed82a3; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.45 system-ui,-apple-system,sans-serif; }
+    main { max-width:1160px; margin:auto; padding:20px 16px 48px; }
+    header { display:flex; align-items:end; justify-content:space-between; gap:16px; padding-bottom:22px; border-bottom:1px solid var(--line); }
+    h1 { font-size:clamp(27px,5vw,42px); letter-spacing:-.04em; line-height:1.05; margin:2px 0 6px; }
+    h2 { font-size:18px; margin:0; letter-spacing:-.01em; }
+    p { margin:0; color:var(--muted); }
+    h1, h2, p, .eyebrow { display:block; }
+    .eyebrow { text-transform:uppercase; color:var(--mint); font-weight:700; font-size:11px; letter-spacing:.18em; }
+    #connection { border:1px solid var(--line); padding:7px 10px; border-radius:999px; color:var(--amber); font-size:12px; white-space:nowrap; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:18px 0; }
+    .stat, .panel { background:var(--panel); border:1px solid var(--line); border-radius:15px; }
+    .stat { padding:13px 15px; }
+    .stat small { color:var(--muted); font-size:12px; display:block; }
+    .stat strong { display:block; font-size:clamp(18px,3vw,27px); font-variant-numeric:tabular-nums; letter-spacing:-.03em; margin-top:3px; }
+    .grid { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr); gap:14px; align-items:start; }
+    .stack { display:grid; gap:14px; }
+    .panel { padding:16px; min-width:0; }
+    .panel-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; }
+    .panel-head small, .note { color:var(--muted); font-size:12px; }
+    canvas { display:block; width:100%; border-radius:7px; background:#0b151e; }
+    #raster { height:390px; }
+    #learning { height:190px; }
+    #arena { aspect-ratio:3/2; height:auto; touch-action:none; }
+    #viewer3d { width:100%; height:min(62vw,480px); min-height:300px; border:1px solid var(--line); border-radius:9px; background:#0b151e; }
+    .viewer-note { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; margin:6px 0 14px; font-size:12px; }
+    .viewer-note a { color:var(--mint); }
+    .body-status { display:flex; align-items:center; gap:10px; margin:12px 0; font-size:13px; }
+    .energy-track { flex:1; height:10px; border-radius:99px; overflow:hidden; background:#30404a; }
+    #energy-fill { width:100%; height:100%; background:var(--mint); }
+    #sensors { font-size:12px; line-height:1.5; margin-bottom:12px; }
+    .manual-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 12px; }
+    [hidden] { display:none !important; }
+    .manual-grid .slider { grid-column:1/-1; }
+    #heatmap { max-width:490px; aspect-ratio:1; margin:auto; }
+    .legend { display:flex; justify-content:space-between; gap:10px; font-size:12px; color:var(--muted); margin-top:8px; }
+    .rates { display:grid; gap:6px; }
+    .rate { display:grid; grid-template-columns:88px minmax(0,1fr) 52px; gap:9px; align-items:center; font-size:12px; font-variant-numeric:tabular-nums; }
+    .rate label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--muted); }
+    .track { height:8px; border-radius:99px; background:#263440; overflow:hidden; }
+    .bar { height:100%; width:0; background:var(--mint); border-radius:99px; transition:width .2s; }
+    .rate output { text-align:right; }
+    .controls { display:grid; gap:12px; }
+    .control-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    button, select { min-height:44px; border:1px solid #3b5160; border-radius:9px; padding:9px 12px; background:#1b2a35; color:var(--text); font:inherit; cursor:pointer; }
+    button:hover, select:hover { border-color:var(--mint); }
+    button:focus-visible, select:focus-visible, input:focus-visible { outline:3px solid var(--amber); outline-offset:2px; }
+    button.primary { background:var(--mint); color:#10221f; border-color:var(--mint); font-weight:700; }
+    button.warn { border-color:#8b5968; }
+    .toggle, .slider { display:flex; align-items:center; gap:9px; min-height:44px; color:var(--text); }
+    .toggle input { width:20px; height:20px; accent-color:var(--mint); }
+    .slider { width:100%; }
+    .slider input { flex:1; accent-color:var(--mint); min-width:80px; }
+    .slider output { width:28px; text-align:right; font-variant-numeric:tabular-nums; }
+    .small-note { font-size:13px; margin-top:10px; }
+    details summary { cursor:pointer; padding:6px 0; }
+    @media (max-width:760px) { .grid { grid-template-columns:1fr; } .summary { gap:7px; } .stat { padding:10px; } header { flex-direction:column; align-items:flex-start; gap:8px; } #connection { margin-top:3px; } }
+    @media (max-width:370px) { .summary { grid-template-columns:1fr 1fr; } .stat:last-child { grid-column:span 2; } }
+    @media (prefers-reduced-motion:reduce) { .bar { transition:none; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><div class="eyebrow">Simulação neural em malha fechada</div><h1>Veguinha mini</h1><p>Disparos neurais, sensores e física do corpo.</p></div>
+    <div id="connection" role="status" aria-live="polite">Conectando…</div>
+  </header>
+  <section class="summary" aria-label="Resumo da simulação">
+    <div class="stat"><small>Tempo do episódio</small><strong id="time">0,0 s</strong><small id="global-time">Total: 0,0 s</small></div>
+    <div class="stat"><small>Neurônios / sinapses</small><strong id="size">—</strong></div>
+    <div class="stat"><small>Velocidade efetiva</small><strong id="actual">—</strong></div>
+  </section>
+  <div class="grid">
+    <div class="stack">
+      <section class="panel" aria-labelledby="body-title">
+        <div class="panel-head"><h2 id="body-title">Corpo 3D · mjviser</h2><small>Controle neural</small></div>
+        <iframe id="viewer3d" title="Veguinha mini em 3D"></iframe>
+        <div class="viewer-note"><span id="viewer-status">Carregando viewer…</span><a id="viewer-link" target="_blank" rel="noopener" hidden>Abrir viewer em outra aba</a></div>
+        <p class="small-note">Toque no mapa para colocar comida em uma posição fixa. Toque nela de novo para remover.</p>
+        <canvas id="arena" role="img" aria-label="Mapa da arena para colocar ou remover a fonte de odor"></canvas>
+        <div class="control-row"><button id="remove-food" type="button">Remover comida</button></div>
+        <div class="body-status"><span>Energia</span><div class="energy-track"><div id="energy-fill"></div></div><output id="energy-value">100%</output></div>
+        <p id="sensors">Aguardando sensores…</p>
+        <canvas id="retina" role="img" aria-label="Imagens dos olhos esquerdo e direito" style="height:150px" hidden></canvas>
+        <p id="flow-status" class="small-note" role="status"></p>
+        <div id="binocular-panel" hidden><p class="small-note">Visão combinada · campos confirmados</p><canvas id="fusion" style="height:200px" aria-label="Fusão binocular"></canvas><p id="binocular-status" class="small-note" role="status"></p><canvas id="depth" style="height:150px" aria-label="Mapa esparso de profundidade estimada"></canvas></div>
+        <p id="perception" class="small-note"></p>
+        <p id="ecology-status" class="small-note" role="status"></p>
+        <p id="somatic-status" class="small-note" role="status"></p>
+        <div class="manual-grid" hidden>
+          <label for="manual-leg">Perna</label><select id="manual-leg"></select>
+          <label class="slider" for="hip">Torque da junta 1 <input id="hip" type="range" min="-1" max="1" step="0.05" value="0"><output id="hip-value">0,00</output></label>
+          <label class="slider" for="knee">Torque da junta 2 <input id="knee" type="range" min="-1" max="1" step="0.05" value="0"><output id="knee-value">0,00</output></label>
+          <label class="slider" id="joint3-label" for="joint3" hidden>Torque da junta 3 <input id="joint3" type="range" min="-1" max="1" step="0.05" value="0"><output id="joint3-value">0,00</output></label>
+          <label class="toggle"><input id="foot-contact" type="checkbox" checked> Pé em apoio</label><button id="release" type="button">Soltar torques</button>
+          <label class="slider" for="jaw">Mandíbula <input id="jaw" type="range" min="0" max="1" step="0.05" value="0"><output id="jaw-value">0,00</output></label>
+        </div>
+        <p class="small-note">Contatos, trajetória e gradiente de odor aparecem no viewer 3D. No mapa: verde = corpo; ponto claro = boca. O alimento âmbar emite odor e tem estoque finito. As imagens usam as cores e a geometria da cena. O mapa binocular é uma estimativa esparsa; campos sem textura ou ambíguos ficam sem distância.</p>
+        <div id="body-metrics" class="rates" aria-live="polite">Aguardando métricas…</div>
+        <details class="small-note"><summary>Detalhes das juntas e das fases</summary><p id="joint-detail"></p><p id="phase-detail"></p></details>
+      </section>
+      <section class="panel" aria-labelledby="raster-title"><div class="panel-head"><h2 id="raster-title">Raster de disparos</h2><small>Amostra dos últimos 2 s simulados</small></div><canvas id="raster" role="img" aria-label="Amostra de disparos recentes por região"></canvas><div class="legend"><span>Tempo →</span><span>Uma linha por região</span></div></section>
+      <section class="panel" aria-labelledby="learning-title"><div class="panel-head"><h2 id="learning-title">Desempenho motor</h2><small>Deslocamento líquido / caminho · pontos a cada 10 s</small></div><canvas id="learning" role="img" aria-label="Curva de eficiência do deslocamento"></canvas><p id="learning-detail" class="small-note">Aguardando dados…</p></section>
+      <section class="panel" aria-labelledby="control-title"><div class="panel-head"><h2 id="control-title">Controles</h2><small>Mundo e parâmetros</small></div>
+        <div class="controls">
+          <div class="control-row"><button id="pause" class="primary" type="button">Pausar</button><label for="speed">Velocidade</label><select id="speed"><option value="1">1×</option><option value="5">5×</option><option value="20">20×</option><option value="turbo">Turbo</option></select><button id="reset" class="warn" type="button">Reiniciar rede e corpo</button></div>
+          <p id="reset-status" class="small-note" role="status"></p><div class="control-row"><label class="toggle"><input id="plasticity" type="checkbox" disabled> Plasticidade motora</label><span id="plasticity-status" class="small-note" role="status"></span><button id="odor" type="button">Pulso de odor (1 s)</button></div>
+          <div class="control-row"><label for="damage-leg">Perturbar perna</label><select id="damage-leg"><option value="">Nenhuma</option></select><button id="damage" type="button">Desativar</button></div>
+          <label class="slider" for="noise">Ruído <input id="noise" type="range" min="0" max="12" step="0.1" value="2.5"><output id="noise-value">2,5</output></label>
+          <div class="control-row"><label for="region">Região</label><select id="region"></select><label class="toggle"><input id="ablate" type="checkbox"> Silenciar</label></div>
+        </div><p class="small-note">Turbo reduz a renderização. Desativar uma perna zera seu torque e contato para medir a adaptação das outras cinco.</p>
+      </section>
+    </div>
+    <div class="stack">
+      <section class="panel" aria-labelledby="rates-title"><div class="panel-head"><h2 id="rates-title">Taxa por região</h2><small>Hz por neurônio · janela de 0,5 s</small></div><div id="rates" class="rates"></div></section>
+      <section class="panel" aria-labelledby="weights-title"><div class="panel-head"><h2 id="weights-title">Pesos médios</h2><small>Pré → pós</small></div><canvas id="heatmap" role="img" aria-label="Mapa de pesos sinápticos médios entre regiões"></canvas><div class="legend"><span style="color:var(--pink)">■ inibição</span><span>Toque para ver o par</span><span style="color:var(--mint)">■ excitação</span></div><p id="weight-detail" class="small-note" aria-live="polite">Selecione uma célula do mapa.</p></section>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let names = [], matrix = [], world = null, legs = [], last = null, socket = null, stream = null, spikes = [];
+  let jointNames = ['hip','knee'];
+  let plasticityPending=null,plasticityTimer=null,motorLearningEnabled=false;
+  const colors = ['#65ddc3','#f3bc68','#ed82a3','#8bb8f8','#b4a0e9'];
+  const cnv = $('raster'), ctx = cnv.getContext('2d'), map = $('heatmap'), mctx = map.getContext('2d');
+  const arena = $('arena'), actx = arena.getContext('2d');
+  const learning = $('learning'), lctx = learning.getContext('2d');
+  function sizeCanvas(canvas) { const d = Math.min(devicePixelRatio || 1, 2), box = canvas.getBoundingClientRect(); const w=Math.max(1,Math.round(box.width*d)), h=Math.max(1,Math.round(box.height*d)); if(canvas.width!==w || canvas.height!==h){canvas.width=w;canvas.height=h;} return {w,h,d}; }
+  function status(message) { $('connection').textContent = message; }
+  function send(cmd, value, detail) { const data = JSON.stringify({cmd,value,...(typeof detail==='string'?{region:detail}:detail||{})}); if(socket && socket.readyState===1) socket.send(data); else fetch('/command',{method:'POST',headers:{'Content-Type':'application/json'},body:data}).catch(() => status('Conexão perdida')); }
+  function init(data) {
+    cameraKey='';
+    names = data.regions; matrix = data.matrix; world = data.world; legs = data.legs;
+    jointNames = data.joint_names || ['hip','knee'];
+    $('joint3-label').hidden = jointNames.length < 3;
+    document.querySelector('.eyebrow').textContent = data.manual_mode ? 'Teste manual do corpo' : (data.plasticity_note||'Fase 4').split(':')[0];
+    document.querySelector('header p').textContent = (data.plasticity_note || 'Rede e corpo em malha fechada.')+' VNC: '+(data.motor_circuit==='modular'?'modular corrigido':'original');
+    motorLearningEnabled=!!data.motor_learning_enabled;plasticityPending=null;clearTimeout(plasticityTimer);
+    $('plasticity').disabled=!motorLearningEnabled;
+    $('retina').hidden=!data.vision_enabled;$('binocular-panel').hidden=!data.binocular_enabled;
+    $('plasticity').title=data.motor_learning_enabled?'Ativa ou congela as atualizações dos pesos motores':'Plasticidade indisponível nesta execução; inicie mk1 modular sem --phase4';
+    $('reset').textContent=data.motor_learning_enabled?'Reiniciar episódio (manter pesos)':'Reiniciar rede e corpo';
+    $('learning-title').textContent='Desempenho motor · sem aprendizado';
+    if(data.viewer_port){const url=`http://${location.hostname}:${data.viewer_port}/`;if($('viewer3d').src!==url)$('viewer3d').src=url;$('viewer-link').href=url;$('viewer-link').hidden=false;$('viewer-status').textContent='Visão 3D em servidor separado';}
+    else {$('viewer3d').hidden=true;$('viewer-status').textContent='Viewer desligado (--no-viewer)';}
+    document.querySelector('.manual-grid').hidden = !data.manual_mode;
+    $('size').textContent = `${data.cells.toLocaleString('pt-BR')} / ${data.synapses.toLocaleString('pt-BR')}`;
+    $('manual-leg').replaceChildren(...legs.map(name=>{const option=document.createElement('option');option.value=name;option.textContent=name.toUpperCase();return option;}));
+    $('damage-leg').replaceChildren(...["",...legs].map(name=>{const option=document.createElement('option');option.value=name;option.textContent=name?name.toUpperCase():"Nenhuma";return option;}));
+    $('region').replaceChildren(...[...names,...(data.binocular_enabled?['binocular']:[]),...(data.ecology_enabled?['maintenance','prey']:[])].map(name => { const option=document.createElement('option');option.value=name;option.textContent=name;return option; }));
+    $('rates').replaceChildren(...names.map((name,i) => { const row=document.createElement('div');row.className='rate';row.innerHTML=`<label title="${name}">${name}</label><div class="track"><div class="bar" id="bar-${i}"></div></div><output id="rate-${i}">—</output>`;return row; }));
+    drawMap(); drawRaster(); drawArena(); drawLearning([]);
+  }
+  function frame(data) {
+    if(!names.length) return;
+    if(last && data.epoch !== last.epoch) spikes = [];
+    const previous=last;last=data; if(data.world)world=data.world; if(data.spikes) spikes.push(...data.spikes); spikes=spikes.filter(point => point[0]>=data.t-2000);
+    if(data.matrix && (!previous || (data.learning_curve||[]).length !== (previous.learning_curve||[]).length)){matrix=data.matrix;drawMap();}
+    $('time').textContent=((data.episode_t_ms??data.t)/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' s';
+    $('global-time').textContent='Total: '+(data.t/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' s';
+    if(previous&&data.epoch!==previous.epoch){clearTimeout(resetTimer);$('reset').disabled=false;$('reset-status').textContent=data.paused?'Episódio reiniciado e pausado. Pesos preservados.':'Novo episódio. Pesos preservados.';}
+    $('actual').textContent=data.paused?'Pausada':`${data.actual_speed.toLocaleString('pt-BR',{maximumFractionDigits:2})}×`;
+    $('learning-title').textContent=data.plasticity?'Aprendizado motor':'Desempenho motor · sem aprendizado';
+    $('pause').textContent=data.paused?'Continuar':'Pausar'; $('speed').value=String(data.speed); if(plasticityPending===data.plasticity){plasticityPending=null;clearTimeout(plasticityTimer);}
+    $('plasticity').checked=plasticityPending??data.plasticity;
+    $('plasticity').disabled=!motorLearningEnabled||plasticityPending!==null;
+    $('plasticity-status').textContent=plasticityPending!==null?'Aguardando confirmação…':data.plasticity?'Ativa':'Congelada';
+    $('noise').value=data.noise; $('noise-value').textContent=Number(data.noise).toLocaleString('pt-BR',{maximumFractionDigits:1});
+    $('ablate').checked=data.ablated.includes($('region').value);
+    $('damage').textContent=data.damaged_leg?'Reativar':'Desativar';
+    $('viewer3d').hidden=!$('viewer3d').src||data.speed==='turbo';
+    $('viewer-status').textContent=data.speed==='turbo'?'Viewer pausado no modo turbo':$('viewer-link').hidden?'Viewer desligado (--no-viewer)':'Visão 3D em servidor separado';
+    if(data.damaged_leg)$('damage-leg').value=data.damaged_leg;
+    data.rates.forEach((rate,i)=>{ $('rate-'+i).textContent=rate.toFixed(1); $('bar-'+i).style.width=Math.min(100,rate/80*100)+'%'; });
+    if(data.body){
+      const b=data.body,pain=b.pain||[0,0];
+      const eco=b.ecology;
+      const taste=b.taste?.reduce((a,v)=>a.map((x,i)=>x+v[i]/b.taste.length),[0,0,0]);const touch=b.tactile;
+      $('somatic-status').textContent=taste?`Paladar (doce / proteína / amargo): ${taste.map(v=>(100*v).toFixed(0)+'%').join(' / ')} · Expansão visual: ${(100*(b.looming||0)).toFixed(0)}% · Tato: ${touch?touch.filter(v=>v[0]>.02).length:0}/9 áreas · Poda: ${data.neuromodulation?.pruned||0} sinapses (acompanha plasticidade)`:'';
+      $('ecology-status').textContent=eco?`Poeira: ${(100*eco.dust.reduce((a,v)=>a+v,0)/eco.dust.length).toFixed(0)}% · Fadiga: ${(100*eco.fatigue).toFixed(0)}% · Luz nos olhos: ${eco.light.map(v=>(100*v).toFixed(0)+'%').join(' / ')} · Limpeza LF/RF: ${eco.maintenance_hz.slice(0,2).map(v=>v.toFixed(1)).join('/')} Hz · Repouso: ${eco.maintenance_hz[2].toFixed(1)} Hz · Vigília: ${eco.maintenance_hz[3].toFixed(1)} Hz · Presas: ${eco.prey.map((p,i)=>`${i+1}: ${p.energy.toFixed(2)} energia, ${(100*p.health).toFixed(0)}% integridade, ${p.neural_hz.toFixed(1)} Hz (400 neurônios)`).join(' · ')}`:'';
+      $('perception').textContent=`Comida restante: ${((world.food_energy??1)*100).toFixed(1)}% · Ingestão: ${((b.food_intake_rate||0)*100).toFixed(2)}% energia/s · Nocicepção: ${(100*Math.min(1,pain.reduce((a,v)=>a+v,0))).toFixed(0)}% · Força na parede: ${(b.wall_peak_n||[0,0]).reduce((a,v)=>a+v,0).toFixed(2)} N`;
+      if(data.intent)$('perception').textContent+=` · Necessidade energética: ${(100*(data.intent.need??0)).toFixed(0)}% · DN explorar: ${data.intent.go_hz.toFixed(1)} Hz · DN repouso: ${data.intent.hold_hz.toFixed(1)} Hz · Inibição motora: ${data.intent.gate_hz.toFixed(1)} Hz`;
+      drawVision(b,data.epoch);drawBinocular(b);
+      const optical=b.optical_flow;
+      $('flow-status').textContent=optical?`Fluxo óptico pelos pixels · ${(100*optical.valid_fraction).toFixed(0)}% dos campos confiáveis · Setas: direção e intensidade na imagem; sem seta = desconhecido` : '';
+      $('energy-fill').style.width=(data.body.energy*100)+'%';
+      $('energy-value').textContent=Math.round(data.body.energy*100)+'%';
+      $('sensors').textContent=`Antenas: ${data.body.antenna_odor.map(x=>x.toFixed(2)).join(' / ')} · Pés em apoio: ${data.body.contacts.filter(Boolean).length}/6 · Tato da parede: ${data.body.touch?'sim':'não'} · Velocidade: ${data.body.speed.toFixed(1)}`;
+      if(document.activeElement!==$('jaw')) $('jaw').value=data.body.jaw;
+      $('jaw-value').textContent=Number($('jaw').value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+    if(data.metrics){
+      const m=data.metrics, v=m.joint_variance.flat(), phases=m.neighbor_phase_correlation;
+      $('body-metrics').textContent=`Deslocamento líquido: ${m.displacement.toFixed(2)} m · Avanço frontal médio: ${m.mean_forward_flow.toFixed(4)} m/s · Velocidade: ${m.speed.toFixed(2)} m/s · Energia gasta: ${m.energy_spent.toFixed(4)} · Eficiência: ${(m.displacement/Math.max(m.energy_spent,1e-9)).toFixed(1)} · Variância juntas (média): ${(v.reduce((a,b)=>a+b,0)/v.length).toFixed(4)} · Fase vizinhas (média): ${(phases.reduce((a,b)=>a+b,0)/phases.length).toFixed(2)} · Saturação motora: ${(100*data.motor_saturation).toFixed(1)}%`;
+      $('joint-detail').textContent=m.joint_variance.map((values,i)=>`${legs[i].toUpperCase()} `+values.map((v,j)=>`${jointNames[j]} ${v.toFixed(4)}`).join(', ')).join(' · ');
+      const neighbors=[[0,1],[1,2],[3,4],[4,5],[0,3],[1,4],[2,5]];
+      $('phase-detail').textContent=phases.map((value,i)=>`${legs[neighbors[i][0]].toUpperCase()}–${legs[neighbors[i][1]].toUpperCase()}: ${value.toFixed(2)}`).join(' · ');
+    }
+    updateManual(data.manual); drawRaster(); drawArena(); drawLearning(data.learning_curve||[]);
+  }
+  const cameraCanvases=[document.createElement('canvas'),document.createElement('canvas')];let cameraKey='',resetTimer;
+  function drawVision(body,epoch){
+    if(!body.retina)return;const c=$('retina'),{w,h,d}=sizeCanvas(c),ctx=c.getContext('2d');ctx.fillStyle='#0b151e';ctx.fillRect(0,0,w,h);
+    if(body.camera&&body.camera.eyes[0]){const cam=body.camera,key=epoch+':'+cam.seq;
+      if(key!==cameraKey){cameraKey=key;cam.eyes.forEach((encoded,e)=>{const off=cameraCanvases[e];if(cam.encoding==='jpeg'){const image=new Image();image.onload=()=>{if(cameraKey!==key)return;off.width=cam.width;off.height=cam.height;off.getContext('2d').drawImage(image,0,0);};image.src='data:image/jpeg;base64,'+encoded;}else{const raw=atob(encoded);off.width=cam.width;off.height=cam.height;const oc=off.getContext('2d'),pixels=oc.createImageData(cam.width,cam.height);for(let i=0;i<raw.length/3;i++){pixels.data[4*i]=raw.charCodeAt(3*i);pixels.data[4*i+1]=raw.charCodeAt(3*i+1);pixels.data[4*i+2]=raw.charCodeAt(3*i+2);pixels.data[4*i+3]=255;}oc.putImageData(pixels,0,0);}});}
+      ctx.imageSmoothingEnabled=false;ctx.font=`${12*d}px system-ui`;const gap=8*d,iw=(w-gap)/2,ih=Math.min(h-28*d,iw*cam.height/cam.width);
+      cameraCanvases.forEach((off,e)=>{const x=e*(iw+gap);ctx.fillStyle='#a7b7bc';ctx.fillText(e?'Olho direito':'Olho esquerdo',x,15*d);ctx.drawImage(off,x,24*d,iw,ih);if(cam.fovea){const [x0,y0,x1,y1]=cam.fovea;ctx.strokeStyle='#7ff5d080';ctx.lineWidth=d;ctx.strokeRect(x+x0/cam.width*iw,24*d+y0/cam.height*ih,(x1-x0)/cam.width*iw,(y1-y0)/cam.height*ih);}});
+      const flow=body.optical_flow;
+      if(flow){ctx.strokeStyle='#7ff5d0';ctx.lineWidth=1.5*d;flow.angular_rad_s.forEach((rows,e)=>rows.forEach((cols,r)=>cols.forEach((v,s)=>{
+        if(flow.confidence[e][r][s]<.1)return;
+        const x=e*(iw+gap)+(s+.5)*iw/cols.length,y=24*d+(r+.5)*ih/rows.length;
+        const dx=Math.max(-18*d,Math.min(18*d,v[0]*cam.focal_px*.15*iw/cam.width)),dy=Math.max(-18*d,Math.min(18*d,v[1]*cam.focal_px*.15*ih/cam.height));
+        if(Math.hypot(dx,dy)<.5*d)return;
+        const angle=Math.atan2(dy,dx);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dx,y+dy);ctx.lineTo(x+dx-4*d*Math.cos(angle-.5),y+dy-4*d*Math.sin(angle-.5));ctx.moveTo(x+dx,y+dy);ctx.lineTo(x+dx-4*d*Math.cos(angle+.5),y+dy-4*d*Math.sin(angle+.5));ctx.stroke();
+      })));}
+    }else{ctx.font=`${12*d}px system-ui`;body.retina.forEach((eye,e)=>{ctx.fillStyle='#a7b7bc';ctx.fillText(e?'Olho D':'Olho E',6*d,(e+.6)*h/2);eye.forEach((v,i)=>{ctx.fillStyle=`rgb(${Math.round(25+220*v[1])},${Math.round(35+145*v[1]+50*v[0])},${Math.round(40+170*v[0])})`;ctx.fillRect(60*d+i*(w-60*d)/8,e*h/2+3*d,(w-60*d)/8-2*d,h/2-6*d);});});}
+  }
+  function drawBinocular(body){
+    const result=body.binocular,cam=body.camera;if($('binocular-panel').hidden||!cam)return;
+    const fc=$('fusion'),f=sizeCanvas(fc),fctx=fc.getContext('2d');fctx.fillStyle='#0b151e';fctx.fillRect(0,0,f.w,f.h);
+    fctx.imageSmoothingEnabled=true;fctx.drawImage(cameraCanvases[0],0,0,f.w,f.h);
+    const dc=$('depth'),d=sizeCanvas(dc),ctx=dc.getContext('2d');ctx.fillStyle='#0b151e';ctx.fillRect(0,0,d.w,d.h);
+    if(!result||result.camera_seq!==(cam.detail_seq??cam.seq)){$('binocular-status').textContent=`${cam.width}×${cam.height} por olho · Aguardando disparos binoculares…`;return;}
+    const cw=d.w/result.cols,ch=d.h/result.rows;ctx.font=`${11*d.d}px system-ui`;ctx.textAlign='center';ctx.textBaseline='middle';
+    for(let r=0;r<result.rows;r++)for(let c=0;c<result.cols;c++){
+      const distance=result.distance_m[r][c],confidence=result.confidence[r][c],disparity=result.disparity_px[r][c];
+      ctx.fillStyle=distance===null?'#182832':`hsl(${Math.min(220,220*distance/4)},45%,${22+confidence*18}%)`;ctx.fillRect(c*cw+1,r*ch+1,cw-2,ch-2);
+      ctx.fillStyle='#e9f0ef';ctx.fillText(distance===null?'—':distance.toFixed(2)+' m',(c+.5)*cw,(r+.5)*ch);
+      if(distance!==null){const sw=cam.width/result.cols,sh=cam.height/result.rows,x=c*sw,y=r*sh;const lx=Math.max(x,disparity),sx=lx-disparity,width=Math.min(x+sw-lx,cam.width-sx);fctx.globalAlpha=.5;fctx.drawImage(cameraCanvases[1],sx,y,width,sh,lx/cam.width*f.w,y/cam.height*f.h,width/cam.width*f.w,sh/cam.height*f.h);fctx.globalAlpha=1;}
+    }
+    $('binocular-status').textContent=`${cam.width}×${cam.height} por olho · ${cam.fovea?`Centro: ${(1000/cam.detail_period_ms).toFixed(1)} Hz · Periferia/movimento: ${(1000/cam.period_ms).toFixed(1)} Hz`:`${(1000/(cam.period_ms||500)).toFixed(1)} imagens/s`} simulados · Distância estimada em ${(100*result.valid_fraction).toFixed(0)}% dos campos · Binoculares: ${result.mean_hz.toFixed(1)} Hz · — = sem correspondência confiável`;
+  }
+  function updateManual(manual){
+    if(!manual)return;
+    const index=legs.indexOf($('manual-leg').value); if(index<0)return;
+    for(const [joint,id] of [[0,'hip'],[1,'knee'],[2,'joint3']].slice(0,jointNames.length)){
+      if(document.activeElement!==$(id)) $(id).value=manual.torques[index][joint];
+      $(id+'-value').textContent=Number($(id).value).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+    $('foot-contact').checked=manual.contacts[index];
+  }
+  function drawArena(){
+    const {w,h,d}=sizeCanvas(arena);actx.fillStyle='#0b151e';actx.fillRect(0,0,w,h);
+    if(!world)return;
+    const scale=Math.min(w/world.width,h/world.height), ox=(w-world.width*scale)/2, oy=(h-world.height*scale)/2;
+    actx.save();actx.translate(ox,oy);actx.scale(scale,scale);
+    actx.strokeStyle='#233542';actx.lineWidth=1;
+    for(let x=0;x<=world.width;x+=50){actx.beginPath();actx.moveTo(x,0);actx.lineTo(x,world.height);actx.stroke();}
+    for(let y=0;y<=world.height;y+=50){actx.beginPath();actx.moveTo(0,y);actx.lineTo(world.width,y);actx.stroke();}
+    if(world.odor){const glow=actx.createRadialGradient(world.odor[0],world.odor[1],5,world.odor[0],world.odor[1],100);
+    glow.addColorStop(0,'rgba(243,188,104,.30)');glow.addColorStop(1,'rgba(243,188,104,0)');
+    actx.fillStyle=glow;actx.fillRect(0,0,world.width,world.height);
+    actx.fillStyle='#f3bc68';actx.beginPath();actx.arc(world.odor[0],world.odor[1],5,0,Math.PI*2);actx.fill();}
+    actx.strokeStyle='#5b7986';actx.lineWidth=5;actx.strokeRect(2.5,2.5,world.width-5,world.height-5);
+    if(last&&last.body){const b=last.body,[x,y]=b.center;actx.fillStyle='#65ddc3';actx.beginPath();actx.arc(x,y,6,0,Math.PI*2);actx.fill();if(b.mouth){const dx=b.mouth[0]-x,dy=b.mouth[1]-y,n=Math.hypot(dx,dy)||1;actx.strokeStyle='#65ddc3';actx.lineWidth=3;actx.beginPath();actx.moveTo(x,y);actx.lineTo(x+16*dx/n,y+16*dy/n);actx.stroke();actx.fillStyle='#e9f0ef';actx.beginPath();actx.arc(b.mouth[0],b.mouth[1],3,0,Math.PI*2);actx.fill();}}
+    if(last?.body?.ecology){actx.strokeStyle='#b56d55';actx.lineWidth=5;last.body.ecology.prey.forEach(p=>{actx.beginPath();p.segments.forEach((v,i)=>{const x=(v[0]+3)*100,y=(2-v[1])*100;if(i)actx.lineTo(x,y);else actx.moveTo(x,y);});actx.stroke();});}
+    actx.restore();
+  }
+  function drawRaster() {
+    const {w,h,d}=sizeCanvas(cnv); ctx.clearRect(0,0,w,h); ctx.fillStyle='#0b151e';ctx.fillRect(0,0,w,h);
+    if(!names.length)return; const left=66*d, top=13*d, row=(h-top-20*d)/names.length, end=last?last.t:0;
+    ctx.font=`${10*d}px system-ui`;ctx.textBaseline='middle';
+    names.forEach((name,i)=>{const y=top+(i+.5)*row;ctx.fillStyle='#8da5ad';ctx.fillText(name,5*d,y);ctx.strokeStyle='#20313c';ctx.beginPath();ctx.moveTo(left,y+row/2);ctx.lineTo(w-6*d,y+row/2);ctx.stroke();});
+    spikes.forEach(([t,r])=>{const x=left+(t-(end-2000))/2000*(w-left-8*d),y=top+(r+.5)*row;if(x<left||x>w)return;ctx.fillStyle=colors[r%colors.length];ctx.fillRect(x,y-2*d,2*d,4*d);});
+    ctx.fillStyle='#8da5ad';ctx.fillText('−2 s',left,h-8*d);ctx.fillText('agora',w-37*d,h-8*d);
+  }
+  function drawMap() {
+    const {w,h,d}=sizeCanvas(map);mctx.fillStyle='#0b151e';mctx.fillRect(0,0,w,h);if(!names.length)return;
+    const pad=42*d, cell=Math.min((w-pad-8*d)/names.length,(h-pad-8*d)/names.length), max=Math.max(.01,...matrix.flat().map(Math.abs));
+    mctx.font=`${9*d}px system-ui`;mctx.textBaseline='middle';
+    names.forEach((name,i)=>{mctx.fillStyle='#a7b7bc';mctx.fillText(name.slice(0,6),2*d,pad+(i+.5)*cell);mctx.save();mctx.translate(pad+(i+.5)*cell,pad-4*d);mctx.rotate(-Math.PI/2);mctx.fillText(name.slice(0,6),0,0);mctx.restore();});
+    matrix.forEach((row,i)=>row.forEach((value,j)=>{const a=Math.min(1,Math.abs(value)/max);mctx.fillStyle=value<0?`rgba(237,130,163,${Math.max(.08,a)})`:`rgba(101,221,195,${Math.max(.08,a)})`;mctx.fillRect(pad+j*cell,pad+i*cell,Math.max(1,cell-1*d),Math.max(1,cell-1*d));}));
+    map._geometry={pad,cell};
+  }
+  function drawLearning(points){
+    const {w,h,d}=sizeCanvas(learning);lctx.fillStyle='#0b151e';lctx.fillRect(0,0,w,h);
+    const left=42*d,right=w-12*d,top=12*d,bottom=h-26*d;
+    lctx.strokeStyle='#324653';lctx.lineWidth=d;
+    for(const value of [0,.1,.2,.3]){const y=bottom-value/.4*(bottom-top);lctx.beginPath();lctx.moveTo(left,y);lctx.lineTo(right,y);lctx.stroke();lctx.fillStyle='#a7b7bc';lctx.font=`${10*d}px system-ui`;lctx.fillText(`${Math.round(value*100)}%`,5*d,y+3*d);}
+    if(points.length){const max=Math.max(10,points[points.length-1].t_s);lctx.strokeStyle='#65ddc3';lctx.lineWidth=2*d;lctx.beginPath();points.forEach((point,i)=>{const x=left+point.t_s/max*(right-left),y=bottom-Math.min(.4,point.net_path)/.4*(bottom-top);if(i)lctx.lineTo(x,y);else lctx.moveTo(x,y);});lctx.stroke();const p=points[points.length-1];$('learning-detail').textContent=`${(p.net_path*100).toFixed(2)}% líquido/caminho · ${p.net_energy.toFixed(2)} deslocamento/energia · fase ${p.phase.toFixed(2)} · saturação ${(p.motor_saturation*100).toFixed(1)}%`;}else $('learning-detail').textContent='Aguardando 10 s simulados…';
+  }
+  map.addEventListener('click',event=>{if(!map._geometry)return;const {pad,cell}=map._geometry,d=Math.min(devicePixelRatio||1,2),rect=map.getBoundingClientRect(),x=(event.clientX-rect.left)*d,y=(event.clientY-rect.top)*d,j=Math.floor((x-pad)/cell),i=Math.floor((y-pad)/cell);if(i>=0&&j>=0&&i<names.length&&j<names.length)$('weight-detail').textContent=`${names[i]} → ${names[j]}: ${matrix[i][j].toFixed(3)}`;});
+  function handle(raw){let data;try{data=JSON.parse(raw)}catch{return}if(data.type==='init')init(data);else if(data.type==='frame')frame(data);else if(data.type==='error')status(data.message);}
+  function fallback(){if(stream)return;status('SSE + POST');stream=new EventSource('/events');stream.onmessage=event=>handle(event.data);stream.onerror=()=>status('Reconectando…');}
+  function connect(){try{socket=new WebSocket(`ws://${location.hostname}:${Number(location.port||80)+1}`);const timeout=setTimeout(()=>{if(socket.readyState!==1){socket.close();fallback();}},1800);socket.onopen=()=>{clearTimeout(timeout);status('WebSocket');if(stream){stream.close();stream=null;}};socket.onmessage=event=>handle(event.data);socket.onerror=()=>{clearTimeout(timeout);fallback()};socket.onclose=()=>{clearTimeout(timeout);fallback()};}catch{fallback();}}
+  $('pause').onclick=()=>send('pause',!(last&&last.paused)); $('speed').onchange=event=>send('speed',event.target.value==='turbo'?'turbo':Number(event.target.value)); $('reset').onclick=()=>{$('reset').disabled=true;$('reset-status').textContent='Reiniciando episódio…';send('reset');clearTimeout(resetTimer);resetTimer=setTimeout(()=>{$('reset').disabled=false;$('reset-status').textContent='Aguardando confirmação do servidor.';},8000);};
+  $('plasticity').onchange=event=>{plasticityPending=event.target.checked;event.target.disabled=true;$('plasticity-status').textContent='Aguardando confirmação…';send('plasticity',plasticityPending);clearTimeout(plasticityTimer);plasticityTimer=setTimeout(()=>{plasticityPending=null;$('plasticity').disabled=!motorLearningEnabled;$('plasticity').checked=!!(last&&last.plasticity);status('Plasticidade: confirmação não recebida');},8000);}; $('odor').onclick=()=>send('pulse',12);
+  $('ablate').onchange=event=>send('ablate',event.target.checked,$('region').value); $('region').onchange=()=>{$('ablate').checked=last?last.ablated.includes($('region').value):false};
+  $('damage').onclick=()=>{const leg=$('damage-leg').value;if(leg)send('damage',!(last&&last.damaged_leg===leg),{leg});};
+  $('manual-leg').onchange=()=>{if(last)updateManual(last.manual)};
+  for(const [joint,id] of [[0,'hip'],[1,'knee'],[2,'joint3']]) $(id).oninput=event=>{const value=Number(event.target.value);$(id+'-value').textContent=value.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});send('motor',value,{leg:$('manual-leg').value,joint});};
+  $('foot-contact').onchange=event=>send('contact',event.target.checked,{leg:$('manual-leg').value});
+  $('release').onclick=()=>{const leg=$('manual-leg').value;['hip','knee','joint3'].slice(0,jointNames.length).forEach((id,joint)=>{send('motor',0,{leg,joint});$(id).value=0;$(id+'-value').textContent='0,00';});};
+  $('jaw').oninput=event=>{const value=Number(event.target.value);$('jaw-value').textContent=value.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});send('jaw',value);};
+  arena.addEventListener('pointerdown',event=>{if(!world)return;const rect=arena.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=arena.width,h=arena.height,scale=Math.min(w/world.width,h/world.height),ox=(w-world.width*scale)/2,oy=(h-world.height*scale)/2,x=((event.clientX-rect.left)*d-ox)/scale,y=((event.clientY-rect.top)*d-oy)/scale;if(x<0||x>world.width||y<0||y>world.height)return;const point=[Math.round(x),Math.round(y)];send('food',world.odor&&Math.hypot(point[0]-world.odor[0],point[1]-world.odor[1])<15?null:point);});
+  $('remove-food').onclick=()=>send('food',null);
+  let noiseTimer; $('noise').oninput=event=>{const value=Number(event.target.value);$('noise-value').textContent=value.toLocaleString('pt-BR',{maximumFractionDigits:1});clearTimeout(noiseTimer);noiseTimer=setTimeout(()=>send('noise',value),100);};
+  new ResizeObserver(()=>{drawRaster();drawMap();drawArena();drawLearning(last&&last.learning_curve||[])}).observe(document.querySelector('.grid'));
+  fetch('/state').then(response=>response.json()).then(init).catch(()=>status('Servidor indisponível'));connect();
+})();
+</script>
+</body>
+</html>

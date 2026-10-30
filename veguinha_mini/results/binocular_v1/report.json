@@ -1,0 +1,339 @@
+{
+  "device": "25078PC3EG",
+  "resolution": [
+    320,
+    180
+  ],
+  "sample_period_ms": 500,
+  "neuron_count": 5760,
+  "synapse_count": 352048,
+  "calibration_planes": [
+    {
+      "seed": 42,
+      "truth": 0.6,
+      "valid": 17,
+      "median": 0.6
+    },
+    {
+      "seed": 42,
+      "truth": 1.0,
+      "valid": 20,
+      "median": 0.993
+    },
+    {
+      "seed": 42,
+      "truth": 1.8,
+      "valid": 24,
+      "median": 1.8
+    },
+    {
+      "seed": 43,
+      "truth": 0.6,
+      "valid": 17,
+      "median": 0.6
+    },
+    {
+      "seed": 43,
+      "truth": 1.0,
+      "valid": 20,
+      "median": 0.993
+    },
+    {
+      "seed": 43,
+      "truth": 1.8,
+      "valid": 24,
+      "median": 1.8
+    },
+    {
+      "seed": 44,
+      "truth": 0.6,
+      "valid": 17,
+      "median": 0.6
+    },
+    {
+      "seed": 44,
+      "truth": 1.0,
+      "valid": 20,
+      "median": 0.993
+    },
+    {
+      "seed": 44,
+      "truth": 1.8,
+      "valid": 24,
+      "median": 1.8
+    }
+  ],
+  "arena_confirmation": [
+    {
+      "arena_seed": 42,
+      "accepted": 6,
+      "total": 24
+    },
+    {
+      "arena_seed": 43,
+      "accepted": 6,
+      "total": 24
+    },
+    {
+      "arena_seed": 44,
+      "accepted": 6,
+      "total": 24
+    }
+  ],
+  "resolution_benchmark": [
+    {
+      "resolution": [
+        160,
+        90
+      ],
+      "rays_per_pair": 28800,
+      "seconds_per_pair": [
+        0.3490430000019842,
+        0.06701723099831725,
+        0.0638163080002414,
+        0.06598584600578761
+      ],
+      "mean_s": 0.06560646166811542,
+      "payload_bytes": 5252
+    },
+    {
+      "resolution": [
+        320,
+        180
+      ],
+      "rays_per_pair": 115200,
+      "seconds_per_pair": [
+        0.2947400769990054,
+        0.4870630000004894,
+        0.4158867689984618,
+        0.21683638399554184
+      ],
+      "mean_s": 0.37326205099816434,
+      "payload_bytes": 12844
+    },
+    {
+      "resolution": [
+        640,
+        360
+      ],
+      "rays_per_pair": 460800,
+      "seconds_per_pair": [
+        1.1403510009986348,
+        0.9969662310031708,
+        0.9934818459951202,
+        0.9974630770011572
+      ],
+      "mean_s": 0.9959703846664828,
+      "payload_bytes": 32584
+    }
+  ],
+  "physics": {
+    "bitexact_qpos_qvel": true,
+    "seconds": 0.2,
+    "dt_ms": 2,
+    "resolution": [
+      320,
+      180
+    ]
+  },
+  "live": {
+    "t_ms": 1452840.0,
+    "epoch": 39,
+    "paused": true,
+    "plasticity": true,
+    "world": {
+      "width": 600.0,
+      "height": 400.0,
+      "odor_x": 250.0,
+      "odor_y": 222.0,
+      "odor_sigma": 85.0,
+      "food_enabled": true,
+      "food_energy": 1.0,
+      "food_radius_m": 0.065
+    },
+    "weights_sha256": "69ddb80e99bf2699625973c040fae5212088f7cc8ae8e6f43516049f8ef5fb66",
+    "cells": 5760,
+    "synapses": 352048,
+    "camera_shape": [
+      2,
+      180,
+      320,
+      3
+    ],
+    "encoding": "jpeg",
+    "tracker": false,
+    "scene_offset": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "state_backend": "CythonCodeObject",
+    "dendrite_backend": "NumpyCodeObject",
+    "core_dt_ms": 0.5,
+    "physics_dt_ms": 2.0
+  },
+  "ready": {
+    "t_ms": 1452840.0,
+    "epoch": 39,
+    "episode_t_ms": 400,
+    "plasticity": true,
+    "weights_sha256": "69ddb80e99bf2699625973c040fae5212088f7cc8ae8e6f43516049f8ef5fb66",
+    "body": [
+      -1.199995901351645,
+      -1.6153498482088672e-08,
+      0.17962006030729463
+    ],
+    "paused": true
+  },
+  "unique_tests_passed": 27,
+  "learning_experiment": false,
+  "limitations": [
+    "Fixed calibrated detector, not learned stereo",
+    "Sparse 8x3 fields, ambiguous/untextured areas are unknown",
+    "Contrast normalization and consistency check in NumPy; emitted spikes encode disparity and project to CX",
+    "Distance in metres is a calibrated readout of neural activity"
+  ],
+  "three_stage_test_logs": [
+    "final_tests.log",
+    "paused_preview_test.log",
+    "new_checkpoint_tests.log"
+  ],
+  "held_image_checkpoint_bitexact": true,
+  "new_checkpoint_tests_seconds": 42.527,
+  "live_short_check": {
+    "rows": 3,
+    "cols": 8,
+    "seq": 20,
+    "camera_seq": 1,
+    "disparity_px": [
+      [
+        0.0,
+        1.098,
+        8.694,
+        4.869,
+        8.96,
+        9.0,
+        35.0,
+        11.988
+      ],
+      [
+        30.479,
+        10.0,
+        10.0,
+        10.0,
+        0.0,
+        10.0,
+        58.581,
+        62.88
+      ],
+      [
+        0.0,
+        0.0,
+        51.0,
+        1.0,
+        59.037,
+        14.0,
+        0.0,
+        64.0
+      ]
+    ],
+    "confidence": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.292,
+        0.292,
+        0.0,
+        0.557
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.4,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.956,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "distance_m": [
+      [
+        null,
+        null,
+        null,
+        null,
+        3.272,
+        3.341,
+        null,
+        3.263
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.534,
+        0.524
+      ],
+      [
+        null,
+        null,
+        0.63,
+        null,
+        0.504,
+        null,
+        null,
+        0.533
+      ]
+    ],
+    "axial_depth_m": [
+      [
+        null,
+        null,
+        null,
+        null,
+        3.214,
+        3.2,
+        null,
+        2.402
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.492,
+        0.458
+      ],
+      [
+        null,
+        null,
+        0.565,
+        null,
+        0.488,
+        null,
+        null,
+        0.45
+      ]
+    ],
+    "mean_hz": 3.001,
+    "valid_fraction": 0.333
+  }
+}

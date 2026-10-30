@@ -1,0 +1,83 @@
+{
+  "source": "https://poly.pizza/m/3tCnJC9UYA",
+  "license": "CC0",
+  "sha256_glb": "718b2be1cd6c1b4361e9e4cb7610459b994575d9e3e7b7818348670f53612166",
+  "transform": "x=0.13*z+0.15, y=0.08*x, z=0.10*y+0.025 (from transformed GLB scene coordinates)",
+  "vertex_grid_m": 0.005,
+  "parts": [
+    {
+      "output": "black_detail.obj",
+      "source_faces": 260,
+      "output_faces": 260,
+      "bounds_m": [
+        [
+          0.11656,
+          -0.08259,
+          -0.02225
+        ],
+        [
+          0.37678,
+          0.07752,
+          0.0473
+        ]
+      ],
+      "source_node": "Sphere",
+      "primitive": 0,
+      "material": "black.001"
+    },
+    {
+      "output": "black_body.obj",
+      "source_faces": 5341,
+      "output_faces": 2325,
+      "bounds_m": [
+        [
+          -0.24582,
+          -0.11014,
+          -0.0031
+        ],
+        [
+          0.49303,
+          0.10001,
+          0.09968
+        ]
+      ],
+      "source_node": "Sphere",
+      "primitive": 1,
+      "material": "black"
+    },
+    {
+      "output": "red_shell.obj",
+      "source_faces": 3061,
+      "output_faces": 2902,
+      "bounds_m": [
+        [
+          -0.24524,
+          -0.13793,
+          -0.0286
+        ],
+        [
+          0.19373,
+          0.13289,
+          0.0988
+        ]
+      ],
+      "source_node": "Sphere",
+      "primitive": 2,
+      "material": "red"
+    }
+  ],
+  "gltf_nodes": [
+    {
+      "name": "RootNode",
+      "mesh": null,
+      "children": [
+        "Sphere"
+      ]
+    },
+    {
+      "name": "Sphere",
+      "mesh": "Sphere",
+      "primitives": 3
+    }
+  ]
+}

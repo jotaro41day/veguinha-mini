@@ -1,0 +1,9 @@
+numpy==2.4.4
+brian2==2.10.1
+Cython==3.3.0
+mujoco==3.14.0
+mjviser==0.0.14
+viser==1.1.1
+websockets==16.1.1
+Pillow==12.3.0
+trimesh==5.1.1

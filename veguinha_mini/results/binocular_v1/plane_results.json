@@ -1,0 +1,56 @@
+[
+  {
+    "seed": 42,
+    "truth": 0.6,
+    "valid": 17,
+    "median": 0.6
+  },
+  {
+    "seed": 42,
+    "truth": 1.0,
+    "valid": 20,
+    "median": 0.993
+  },
+  {
+    "seed": 42,
+    "truth": 1.8,
+    "valid": 24,
+    "median": 1.8
+  },
+  {
+    "seed": 43,
+    "truth": 0.6,
+    "valid": 17,
+    "median": 0.6
+  },
+  {
+    "seed": 43,
+    "truth": 1.0,
+    "valid": 20,
+    "median": 0.993
+  },
+  {
+    "seed": 43,
+    "truth": 1.8,
+    "valid": 24,
+    "median": 1.8
+  },
+  {
+    "seed": 44,
+    "truth": 0.6,
+    "valid": 17,
+    "median": 0.6
+  },
+  {
+    "seed": 44,
+    "truth": 1.0,
+    "valid": 20,
+    "median": 0.993
+  },
+  {
+    "seed": 44,
+    "truth": 1.8,
+    "valid": 24,
+    "median": 1.8
+  }
+]

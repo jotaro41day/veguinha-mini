@@ -1,0 +1,687 @@
+{
+  "source": "/data/data/com.termux/files/home/storage/downloads/mk-1.glb",
+  "visual_glb": "/data/data/com.termux/files/home/veguinha_mini/results/mk1_stage2/mk-1-visual.glb",
+  "triangles_before": 74412,
+  "triangles_after": 34424,
+  "claw_triangles_before": 952,
+  "claw_triangles_after_prefilter": [
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600,
+    600
+  ],
+  "groups": [
+    {
+      "group": "mandible_R",
+      "source_pieces": 4,
+      "triangles_before": 2910,
+      "triangles_after": 1405,
+      "relative_simplification_error": 0.0010827298974618316,
+      "pivot_world": [
+        0.019903,
+        -0.208459,
+        -0.301373
+      ],
+      "color_rgba": [
+        205,
+        162,
+        80,
+        255
+      ]
+    },
+    {
+      "group": "mandible_L",
+      "source_pieces": 4,
+      "triangles_before": 2910,
+      "triangles_after": 1408,
+      "relative_simplification_error": 0.001117392093874514,
+      "pivot_world": [
+        0.008819,
+        -0.208459,
+        0.3019
+      ],
+      "color_rgba": [
+        205,
+        162,
+        80,
+        255
+      ]
+    },
+    {
+      "group": "head",
+      "source_pieces": 6,
+      "triangles_before": 2503,
+      "triangles_after": 1211,
+      "relative_simplification_error": 0.00257709133438766,
+      "pivot_world": [
+        -0.348178,
+        0.125838,
+        -0.01404
+      ],
+      "color_rgba": [
+        181,
+        143,
+        74,
+        255
+      ]
+    },
+    {
+      "group": "LF_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.0009099830640479922,
+      "pivot_world": [
+        -0.699575,
+        0.17782,
+        0.410663
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "LH_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.0002065629232674837,
+      "pivot_world": [
+        -2.523677,
+        0.11748,
+        0.774987
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "RH_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.00020694850536528975,
+      "pivot_world": [
+        -2.449896,
+        0.121413,
+        -0.813644
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "LH_femur",
+      "source_pieces": 2,
+      "triangles_before": 596,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.01537188608199358,
+      "pivot_world": [
+        -2.166236,
+        -0.269204,
+        0.383367
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "LH_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.0010037003085017204,
+      "pivot_world": [
+        -2.053979,
+        0.177515,
+        0.277923
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "LF_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.00020152908109594136,
+      "pivot_world": [
+        -0.367055,
+        0.117509,
+        1.008229
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "RF_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.00020153020159341395,
+      "pivot_world": [
+        -0.293807,
+        0.121413,
+        -0.99972
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "LF_femur",
+      "source_pieces": 2,
+      "triangles_before": 596,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.014566920697689056,
+      "pivot_world": [
+        -0.63119,
+        -0.268999,
+        0.548339
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "LM_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.00020504304848145694,
+      "pivot_world": [
+        -1.467255,
+        0.116395,
+        1.161494
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "RM_tibia",
+      "source_pieces": 12,
+      "triangles_before": 7087,
+      "triangles_after": 3429,
+      "relative_simplification_error": 0.00020187000336591154,
+      "pivot_world": [
+        -1.37311,
+        0.121413,
+        -1.128739
+      ],
+      "color_rgba": [
+        95,
+        103,
+        109,
+        255
+      ]
+    },
+    {
+      "group": "LM_femur",
+      "source_pieces": 2,
+      "triangles_before": 596,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.01339547336101532,
+      "pivot_world": [
+        -1.417611,
+        -0.269803,
+        0.633249
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "LM_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.001045113429427147,
+      "pivot_world": [
+        -1.392781,
+        0.177083,
+        0.481741
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "RH_femur",
+      "source_pieces": 2,
+      "triangles_before": 598,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.01466265320777893,
+      "pivot_world": [
+        -2.121884,
+        -0.26684,
+        -0.398527
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "RH_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.0007990820449776947,
+      "pivot_world": [
+        -2.017671,
+        0.17945,
+        -0.283449
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "RF_femur",
+      "source_pieces": 2,
+      "triangles_before": 598,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.014834200032055378,
+      "pivot_world": [
+        -0.590693,
+        -0.26684,
+        -0.561801
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "RF_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.0008195312693715096,
+      "pivot_world": [
+        -0.668991,
+        0.17945,
+        -0.427739
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "RM_femur",
+      "source_pieces": 2,
+      "triangles_before": 598,
+      "triangles_after": 288,
+      "relative_simplification_error": 0.013120564632117748,
+      "pivot_world": [
+        -1.362032,
+        -0.26684,
+        -0.599786
+      ],
+      "color_rgba": [
+        82,
+        91,
+        99,
+        255
+      ]
+    },
+    {
+      "group": "RM_coxa",
+      "source_pieces": 3,
+      "triangles_before": 1940,
+      "triangles_after": 938,
+      "relative_simplification_error": 0.0007784992340020835,
+      "pivot_world": [
+        -1.34837,
+        0.17945,
+        -0.445136
+      ],
+      "color_rgba": [
+        66,
+        75,
+        82,
+        255
+      ]
+    },
+    {
+      "group": "trunk",
+      "source_pieces": 7,
+      "triangles_before": 2173,
+      "triangles_after": 2173,
+      "relative_simplification_error": 0.0,
+      "pivot_world": [
+        -1.45,
+        0.0,
+        0.0
+      ],
+      "color_rgba": [
+        75,
+        84,
+        92,
+        255
+      ]
+    },
+    {
+      "group": "tail",
+      "source_pieces": 6,
+      "triangles_before": 1948,
+      "triangles_after": 297,
+      "relative_simplification_error": 0.09375622868537903,
+      "pivot_world": [
+        -2.31662,
+        -0.010058,
+        0.013982
+      ],
+      "color_rgba": [
+        64,
+        72,
+        79,
+        255
+      ]
+    }
+  ],
+  "jaw_pivots_world": {
+    "mandible_L": [
+      0.008819,
+      -0.208459,
+      0.3019
+    ],
+    "mandible_R": [
+      0.019903,
+      -0.208459,
+      -0.301373
+    ]
+  },
+  "leg_pivots_world": {
+    "LF_coxa": [
+      -0.699575,
+      0.17782,
+      0.410663
+    ],
+    "LF_femur": [
+      -0.63119,
+      -0.268999,
+      0.548339
+    ],
+    "LF_tibia": [
+      -0.367055,
+      0.117509,
+      1.008229
+    ],
+    "LM_coxa": [
+      -1.392781,
+      0.177083,
+      0.481741
+    ],
+    "LM_femur": [
+      -1.417611,
+      -0.269803,
+      0.633249
+    ],
+    "LM_tibia": [
+      -1.467255,
+      0.116395,
+      1.161494
+    ],
+    "LH_coxa": [
+      -2.053979,
+      0.177515,
+      0.277923
+    ],
+    "LH_femur": [
+      -2.166236,
+      -0.269204,
+      0.383367
+    ],
+    "LH_tibia": [
+      -2.523677,
+      0.11748,
+      0.774987
+    ],
+    "RF_coxa": [
+      -0.668991,
+      0.17945,
+      -0.427739
+    ],
+    "RF_femur": [
+      -0.590693,
+      -0.26684,
+      -0.561801
+    ],
+    "RF_tibia": [
+      -0.293807,
+      0.121413,
+      -0.99972
+    ],
+    "RM_coxa": [
+      -1.34837,
+      0.17945,
+      -0.445136
+    ],
+    "RM_femur": [
+      -1.362032,
+      -0.26684,
+      -0.599786
+    ],
+    "RM_tibia": [
+      -1.37311,
+      0.121413,
+      -1.128739
+    ],
+    "RH_coxa": [
+      -2.017671,
+      0.17945,
+      -0.283449
+    ],
+    "RH_femur": [
+      -2.121884,
+      -0.26684,
+      -0.398527
+    ],
+    "RH_tibia": [
+      -2.449896,
+      0.121413,
+      -0.813644
+    ]
+  },
+  "feet": {
+    "LF": {
+      "claw_tips_world": [
+        [
+          -0.035621,
+          -0.920478,
+          1.60471
+        ],
+        [
+          0.097905,
+          -0.920621,
+          1.524548
+        ]
+      ],
+      "contact_world": [
+        0.031142,
+        -0.92055,
+        1.564629
+      ],
+      "contact_relative_to_knee": [
+        0.398197,
+        -1.038058,
+        0.5564
+      ]
+    },
+    "LM": {
+      "claw_tips_world": [
+        [
+          -1.541,
+          -0.921766,
+          1.83968
+        ],
+        [
+          -1.38764,
+          -0.921788,
+          1.850884
+        ]
+      ],
+      "contact_world": [
+        -1.46432,
+        -0.921777,
+        1.845282
+      ],
+      "contact_relative_to_knee": [
+        0.002935,
+        -1.038172,
+        0.683788
+      ]
+    },
+    "LH": {
+      "claw_tips_world": [
+        [
+          -2.991146,
+          -0.920407,
+          1.27183
+        ],
+        [
+          -2.875487,
+          -0.920598,
+          1.373913
+        ]
+      ],
+      "contact_world": [
+        -2.933317,
+        -0.920503,
+        1.322872
+      ],
+      "contact_relative_to_knee": [
+        -0.409639,
+        -1.037983,
+        0.547884
+      ]
+    },
+    "RF": {
+      "claw_tips_world": [
+        [
+          0.080354,
+          -0.914297,
+          -1.574492
+        ],
+        [
+          0.207016,
+          -0.914575,
+          -1.48498
+        ]
+      ],
+      "contact_world": [
+        0.143685,
+        -0.914436,
+        -1.529736
+      ],
+      "contact_relative_to_knee": [
+        0.437492,
+        -1.035849,
+        -0.530016
+      ]
+    },
+    "RM": {
+      "claw_tips_world": [
+        [
+          -1.397099,
+          -0.914097,
+          -1.814523
+        ],
+        [
+          -1.24333,
+          -0.914097,
+          -1.814523
+        ]
+      ],
+      "contact_world": [
+        -1.320214,
+        -0.914097,
+        -1.814523
+      ],
+      "contact_relative_to_knee": [
+        0.052896,
+        -1.03551,
+        -0.685784
+      ]
+    },
+    "RH": {
+      "claw_tips_world": [
+        [
+          -2.881186,
+          -0.914575,
+          -1.346952
+        ],
+        [
+          -2.757183,
+          -0.914332,
+          -1.440504
+        ]
+      ],
+      "contact_world": [
+        -2.819184,
+        -0.914454,
+        -1.393728
+      ],
+      "contact_relative_to_knee": [
+        -0.369288,
+        -1.035866,
+        -0.580084
+      ]
+    }
+  }
+}

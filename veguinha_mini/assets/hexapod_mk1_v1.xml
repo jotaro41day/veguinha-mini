@@ -1,0 +1,174 @@
+<mujoco model="veguinha_mk1_three_active_joints">
+  <compiler angle="radian" inertiafromgeom="true" />
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast" iterations="60" />
+  <default>
+    <joint limited="true" armature="0.0002" damping="0.025" />
+    <geom contype="1" conaffinity="1" solref="0.012 1" solimp="0.9 0.95 0.001" />
+  </default>
+  <asset>
+    <mesh name="trunk" file="mk1/trunk.obj" />
+    <mesh name="head" file="mk1/head.obj" />
+    <mesh name="tail" file="mk1/tail.obj" />
+    <mesh name="mandible_L" file="mk1/mandible_L.obj" />
+    <mesh name="mandible_R" file="mk1/mandible_R.obj" />
+    <mesh name="LF_coxa" file="mk1/LF_coxa.obj" />
+    <mesh name="LF_femur" file="mk1/LF_femur.obj" />
+    <mesh name="LF_tibia" file="mk1/LF_tibia.obj" />
+    <mesh name="LM_coxa" file="mk1/LM_coxa.obj" />
+    <mesh name="LM_femur" file="mk1/LM_femur.obj" />
+    <mesh name="LM_tibia" file="mk1/LM_tibia.obj" />
+    <mesh name="LH_coxa" file="mk1/LH_coxa.obj" />
+    <mesh name="LH_femur" file="mk1/LH_femur.obj" />
+    <mesh name="LH_tibia" file="mk1/LH_tibia.obj" />
+    <mesh name="RF_coxa" file="mk1/RF_coxa.obj" />
+    <mesh name="RF_femur" file="mk1/RF_femur.obj" />
+    <mesh name="RF_tibia" file="mk1/RF_tibia.obj" />
+    <mesh name="RM_coxa" file="mk1/RM_coxa.obj" />
+    <mesh name="RM_femur" file="mk1/RM_femur.obj" />
+    <mesh name="RM_tibia" file="mk1/RM_tibia.obj" />
+    <mesh name="RH_coxa" file="mk1/RH_coxa.obj" />
+    <mesh name="RH_femur" file="mk1/RH_femur.obj" />
+    <mesh name="RH_tibia" file="mk1/RH_tibia.obj" />
+  </asset>
+  <worldbody>
+    <light pos="0 0 3" dir="0 0 -1" diffuse=".9 .9 .9" />
+    <geom name="floor" type="plane" size="3 2 .1" rgba=".11 .16 .18 1" friction="1.3 .015 .002" />
+    <geom name="wall_front" type="box" pos="3.02 0 .15" size=".02 2 .15" rgba=".18 .24 .27 1" />
+    <geom name="wall_back" type="box" pos="-3.02 0 .15" size=".02 2 .15" rgba=".18 .24 .27 1" />
+    <geom name="wall_left" type="box" pos="0 -2.02 .15" size="3 .02 .15" rgba=".18 .24 .27 1" />
+    <geom name="wall_right" type="box" pos="0 2.02 .15" size="3 .02 .15" rgba=".18 .24 .27 1" />
+    <body name="thorax" pos="-1.2 0 .1804">
+      <freejoint name="base" />
+      <geom name="visual_trunk" type="mesh" mesh="trunk" mass="0" contype="0" conaffinity="0" group="1" rgba="0.294117647 0.329411765 0.360784314 1" />
+      <geom name="visual_head" type="mesh" mesh="head" mass="0" contype="0" conaffinity="0" group="1" rgba="0.709803922 0.560784314 0.290196078 1" />
+      <geom name="visual_tail" type="mesh" mesh="tail" mass="0" contype="0" conaffinity="0" group="1" rgba="0.250980392 0.282352941 0.309803922 1" />
+      <geom name="visual_mandible_L" type="mesh" mesh="mandible_L" mass="0" contype="0" conaffinity="0" group="1" rgba="0.803921569 0.635294118 0.31372549 1" />
+      <geom name="visual_mandible_R" type="mesh" mesh="mandible_R" mass="0" contype="0" conaffinity="0" group="1" rgba="0.803921569 0.635294118 0.31372549 1" />
+      <geom name="shell" type="ellipsoid" pos="-0.0023775071 0.000326786259 0.04351269" size="0.205 0.075 0.052" mass="0.196" rgba=".2 .3 .3 0" />
+      <geom name="head" type="ellipsoid" pos="0.25889946 -0.00014824 0.03192753" size="0.065 0.065 0.045" mass="0.016" rgba=".2 .3 .3 0" />
+      <geom name="tail" type="ellipsoid" pos="-0.20290401 -0.00082042 -0.04963949" size="0.062 0.034 0.025" mass="0.008" rgba=".2 .3 .3 0" />
+      <body name="lf_coxa" pos="0.12757225 -0.06981271 0.0302294">
+        <joint name="lf_coxa" type="hinge" axis="0 -0 1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="lf_coxa_shaft" type="capsule" fromto="0 0 0 0.01162545 -0.02340492 -0.07595923" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_LF_coxa" type="mesh" mesh="LF_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="lf_femur" pos="0.01162545 -0.02340492 -0.07595923">
+          <joint name="lf_femur" type="hinge" axis="-0.837786 -0.545998 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11810046131621388" />
+          <geom name="lf_femur_shaft" type="capsule" fromto="0 0 0 0.04490295 -0.0781813 0.06570636" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_LF_femur" type="mesh" mesh="LF_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="lf_tibia" pos="0.04490295 -0.0781813 0.06570636">
+            <joint name="lf_tibia" type="hinge" axis="-0.813201 -0.581982 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.06941418967520588" />
+            <geom name="lf_tibia_shaft" type="capsule" fromto="0 0 0 0.06769349 -0.094588 -0.17637653" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_LF_tibia" type="mesh" mesh="LF_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="lf_foot" type="sphere" pos="0.06769349 -0.094588 -0.17637653" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="lf_toe" pos="0.06769349 -0.094588 -0.17637653" size=".005" />
+          </body>
+        </body>
+      </body>
+      <body name="lm_coxa" pos="0.00972723 -0.08189597 0.03010411">
+        <joint name="lm_coxa" type="hinge" axis="0 -0 1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="lm_coxa_shaft" type="capsule" fromto="0 0 0 -0.0042211 -0.02575636 -0.07597062" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_LM_coxa" type="mesh" mesh="LM_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="lm_femur" pos="-0.0042211 -0.02575636 -0.07597062">
+          <joint name="lm_femur" type="hinge" axis="-0.999258 0.038509 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11808451923221709" />
+          <geom name="lm_femur_shaft" type="capsule" fromto="0 0 0 -0.00843948 -0.08980165 0.06565366" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_LM_femur" type="mesh" mesh="LM_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="lm_tibia" pos="-0.00843948 -0.08980165 0.06565366">
+            <joint name="lm_tibia" type="hinge" axis="-0.999991 -0.004292 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.06937212826052255" />
+            <geom name="lm_tibia_shaft" type="capsule" fromto="0 0 0 0.00049895 -0.11624396 -0.17618715" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_LM_tibia" type="mesh" mesh="LM_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="lm_foot" type="sphere" pos="0.00049895 -0.11624396 -0.17618715" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="lm_toe" pos="0.00049895 -0.11624396 -0.17618715" size=".005" />
+          </body>
+        </body>
+      </body>
+      <body name="lh_coxa" pos="-0.10267643 -0.04724691 0.03017755">
+        <joint name="lh_coxa" type="hinge" axis="0 -0 1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="lh_coxa_shaft" type="capsule" fromto="0 0 0 -0.01908369 -0.01792548 -0.07594223" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_LH_coxa" type="mesh" mesh="LH_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="lh_femur" pos="-0.01908369 -0.01792548 -0.07594223">
+          <joint name="lh_femur" type="hinge" axis="-0.774605 0.632445 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11808268690859956" />
+          <geom name="lh_femur_shaft" type="capsule" fromto="0 0 0 -0.06076497 -0.0665754 0.06573628" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_LH_femur" type="mesh" mesh="LH_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="lh_tibia" pos="-0.06076497 -0.0665754 0.06573628">
+            <joint name="lh_tibia" type="hinge" axis="-0.800893 0.598807 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.06940240755609933" />
+            <geom name="lh_tibia_shaft" type="capsule" fromto="0 0 0 -0.0696388 -0.09314045 -0.1763716" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_LH_tibia" type="mesh" mesh="LH_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="lh_foot" type="sphere" pos="-0.0696388 -0.09314045 -0.1763716" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="lh_toe" pos="-0.0696388 -0.09314045 -0.1763716" size=".005" />
+          </body>
+        </body>
+      </body>
+      <body name="rf_coxa" pos="0.13277153 0.07271563 0.0305065">
+        <joint name="rf_coxa" type="hinge" axis="-0 0 -1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="rf_coxa_shaft" type="capsule" fromto="0 0 0 0.01331066 0.02279054 -0.0758693" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_RF_coxa" type="mesh" mesh="RF_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="rf_femur" pos="0.01331066 0.02279054 -0.0758693">
+          <joint name="rf_femur" type="hinge" axis="0.796658 -0.60443 -0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11830715946228289" />
+          <geom name="rf_femur_shaft" type="capsule" fromto="0 0 0 0.05047062 0.07444623 0.06600301" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_RF_femur" type="mesh" mesh="RF_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="rf_tibia" pos="0.05047062 0.07444623 0.06600301">
+            <joint name="rf_tibia" type="hinge" axis="0.77121 -0.636581 -0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.06972298443232161" />
+            <geom name="rf_tibia_shaft" type="capsule" fromto="0 0 0 0.07437364 0.09010272 -0.17704021" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_RF_tibia" type="mesh" mesh="RF_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="rf_foot" type="sphere" pos="0.07437364 0.09010272 -0.17704021" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="rf_toe" pos="0.07437364 0.09010272 -0.17704021" size=".005" />
+          </body>
+        </body>
+      </body>
+      <body name="rm_coxa" pos="0.0172771 0.07567312 0.0305065">
+        <joint name="rm_coxa" type="hinge" axis="-0 0 -1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="rm_coxa_shaft" type="capsule" fromto="0 0 0 -0.00232254 0.0262905 -0.0758693" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_RM_coxa" type="mesh" mesh="RM_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="rm_femur" pos="-0.00232254 0.0262905 -0.0758693">
+          <joint name="rm_femur" type="hinge" axis="0.999408 -0.034406 -0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11835470258694845" />
+          <geom name="rm_femur_shaft" type="capsule" fromto="0 0 0 -0.00188326 0.08992201 0.06600301" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_RM_femur" type="mesh" mesh="RM_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="rm_tibia" pos="-0.00188326 0.08992201 0.06600301">
+            <joint name="rm_tibia" type="hinge" axis="0.997038 -0.076904 -0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.0697806407023454" />
+            <geom name="rm_tibia_shaft" type="capsule" fromto="0 0 0 0.00899232 0.11658328 -0.17704021" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_RM_tibia" type="mesh" mesh="RM_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="rm_foot" type="sphere" pos="0.00899232 0.11658328 -0.17704021" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="rm_toe" pos="0.00899232 0.11658328 -0.17704021" size=".005" />
+          </body>
+        </body>
+      </body>
+      <body name="rh_coxa" pos="-0.09650407 0.04818633 0.0305065">
+        <joint name="rh_coxa" type="hinge" axis="-0 0 -1" range="-.8 .8" stiffness="0.2" damping="0.025" springref="0.0" />
+        <geom name="rh_coxa_shaft" type="capsule" fromto="0 0 0 -0.01771621 0.01956326 -0.0758693" size="0.009" mass="0.005" rgba=".3 .4 .4 0" />
+        <geom name="visual_RH_coxa" type="mesh" mesh="RH_coxa" mass="0" contype="0" conaffinity="0" group="1" rgba="0.258823529 0.294117647 0.321568627 1" />
+        <body name="rh_femur" pos="-0.01771621 0.01956326 -0.0758693">
+          <joint name="rh_femur" type="hinge" axis="0.818977 0.573827 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.11832683390733542" />
+          <geom name="rh_femur_shaft" type="capsule" fromto="0 0 0 -0.05576204 0.07056989 0.06600301" size="0.01" mass="0.005" rgba=".3 .4 .4 0" />
+          <geom name="visual_RH_femur" type="mesh" mesh="RH_femur" mass="0" contype="0" conaffinity="0" group="1" rgba="0.321568627 0.356862745 0.388235294 1" />
+          <body name="rh_tibia" pos="-0.05576204 0.07056989 0.06600301">
+            <joint name="rh_tibia" type="hinge" axis="0.843567 0.537025 0" range="-.8 .8" stiffness="0.8" damping="0.045" springref="-0.06976392670310251" />
+            <geom name="rh_tibia_shaft" type="capsule" fromto="0 0 0 -0.06277896 0.09861428 -0.17704021" size="0.008" mass="0.004" rgba=".3 .4 .4 0" />
+            <geom name="visual_RH_tibia" type="mesh" mesh="RH_tibia" mass="0" contype="0" conaffinity="0" group="1" rgba="0.37254902 0.403921569 0.42745098 1" />
+            <geom name="rh_foot" type="sphere" pos="-0.06277896 0.09861428 -0.17704021" size=".024" mass=".002" friction="1.4 .02 .002" rgba=".7 .6 .3 0" />
+            <site name="rh_toe" pos="-0.06277896 0.09861428 -0.17704021" size=".005" />
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="lf_coxa_motor" joint="lf_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lf_femur_motor" joint="lf_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lf_tibia_motor" joint="lf_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lm_coxa_motor" joint="lm_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lm_femur_motor" joint="lm_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lm_tibia_motor" joint="lm_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lh_coxa_motor" joint="lh_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lh_femur_motor" joint="lh_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="lh_tibia_motor" joint="lh_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rf_coxa_motor" joint="rf_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rf_femur_motor" joint="rf_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rf_tibia_motor" joint="rf_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rm_coxa_motor" joint="rm_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rm_femur_motor" joint="rm_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rm_tibia_motor" joint="rm_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rh_coxa_motor" joint="rh_coxa" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rh_femur_motor" joint="rh_femur" gear="0.08" ctrllimited="true" ctrlrange="-1 1" />
+    <motor name="rh_tibia_motor" joint="rh_tibia" gear="0.2" ctrllimited="true" ctrlrange="-1 1" />
+  </actuator>
+</mujoco>
