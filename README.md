@@ -56,6 +56,14 @@ Abra **http://127.0.0.1:8000/** no navegador do mesmo aparelho e toque **Continu
 
 Checkpoints são arquivos locais confiáveis de pesos e estado; não estão publicados. Não carregue arquivos pickle de origem desconhecida. O estado vivo do aparelho original não é necessário para iniciar uma nova experiência.
 
+## Regulação fisiológica e adaptação sensorial
+
+A execução normal do mk-1 usa uma curva contínua de necessidade energética, sem perder toda a sensibilidade após os primeiros 5% de consumo. Déficit de reserva, fadiga e familiaridade olfatória têm entradas separadas: a fadiga aumenta a pressão neural de repouso, a necessidade reforça a saliência olfatória, e receptores habituam a odores persistentes e recuperam a sensibilidade após sua ausência.
+
+A habituação é uma memória da transdução sensorial, não prova de associação aprendida. A novidade olfatória excita os neurônios de octopamina; dor e contato não são atenuados por esse filtro. Os torques continuam saindo dos pools motores. Nenhuma ação é selecionada por um temporizador ou uma máquina de estados.
+
+Para reproduzir os ganhos anteriores em um controle pareado, use `./scripts/run.sh --legacy-homeostasis`. Ao comparar aprendizagem, mantenha a homeostase igual nos grupos e altere apenas a plasticidade. Os estados dos receptores são preservados nos checkpoints. O painel recebe também o campo `homeostasis` nos snapshots, com déficit de reserva, pressão de fadiga e familiaridade por canal.
+
 ## Testes e resultados
 
 Um lote curto para conferir visão e integração da entrada do app:

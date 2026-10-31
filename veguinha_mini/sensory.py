@@ -6,9 +6,10 @@ from .body import LEG_NAMES
 from .config import Config
 
 
-def homeostatic_need(energy, span):
-    """Continuous reserve deficit, saturated at the receptor's dynamic range."""
-    return float(np.clip((1-np.clip(energy,0,1))/span,0,1))
+def homeostatic_need(energy, span, adaptive=False):
+    """Reserve receptor; the adaptive curve keeps sensitivity below 95% energy."""
+    deficit=1-np.clip(energy,0,1)
+    return float(deficit*(1+span)/(deficit+span) if adaptive else np.clip(deficit/span,0,1))
 
 
 class ValueFlowFilter:
@@ -19,6 +20,8 @@ class ValueFlowFilter:
             raise ValueError("tau do fluxo de valor deve ser positivo")
         self.tau_ms = float(tau_ms)
         self.state = np.zeros(3, dtype=float)
+        self.odor_baseline = np.zeros((4,2))
+        self.odor_change = 0.
 
     def update(self, flow, dt_s):
         alpha = -np.expm1(-1000.0 * dt_s / self.tau_ms)
@@ -27,17 +30,40 @@ class ValueFlowFilter:
 
     def reset(self):
         self.state[:] = 0.0
+        self.odor_baseline = np.zeros((4,2))
+        self.odor_change = 0.
+
+    def adapt_odor(self, sample, dt_s, config, odor_type=0):
+        """Receptor habituation; only the simulation tick advances this memory."""
+        if not np.isfinite(dt_s) or dt_s<0:raise ValueError('dt olfatório inválido')
+        if odor_type not in range(4):raise ValueError('tipo de odor inválido')
+        if not hasattr(self,'odor_baseline'):self.odor_baseline=np.zeros((4,2))
+        raw=np.zeros((4,2));raw[odor_type]=np.clip(sample['antenna_odor'],0,1)
+        if config.ecology_enabled:raw[1]=np.clip(sample.get('prey_odor',[0,0]),0,1)
+        if not np.isfinite(raw).all():raise ValueError('odor não finito')
+        self.odor_change=float(np.max(abs(raw-self.odor_baseline)))
+        self.odor_baseline+=-np.expm1(-dt_s/config.odor_adaptation_tau_s)*(raw-self.odor_baseline)
+        return 1/(1+config.odor_adaptation_strength*self.odor_baseline)
 
 
 def inject_sensors(model, body_sample, odor_type=0, config=None, efference=None,
-                   value_flow=None):
+                   value_flow=None, odor_modulation=None):
     """Injeta aferências e uma cópia motora; nenhuma saída é escolhida aqui."""
     if odor_type not in range(4):
         raise ValueError("odor_type deve estar entre 0 e 3")
     config = config or Config()
     # Interoceptive receptor gain, not a behavioral state or action threshold.
     energy=np.clip(float(body_sample['energy']),0,1)
-    hunger=homeostatic_need(energy,config.intent_hunger_span if getattr(model,'intent',None) is not None else 1.)
+    adaptive=config.homeostasis_enabled and getattr(model,'intent',None) is not None
+    hunger=homeostatic_need(energy,config.intent_hunger_span if getattr(model,'intent',None) is not None else 1.,adaptive)
+    deficit=1-energy if adaptive else 0.
+    fatigue=float(np.clip((body_sample.get('ecology') or {}).get('fatigue',0),0,1)) if adaptive else 0.
+    pressure=fatigue**2
+    modulation=np.ones((4,2)) if odor_modulation is None else np.asarray(odor_modulation,float)
+    if modulation.shape!=(4,2) or not np.isfinite(modulation).all() or np.any((modulation<0)|(modulation>1)):
+        raise ValueError('modulação olfatória inválida')
+    salience=1+config.homeostatic_odor_gain*hunger*(1+deficit) if adaptive else 1.
+    antenna=np.asarray(body_sample['antenna_odor'],float)*modulation[odor_type]*salience
     currents = np.zeros(len(model.group), dtype=float)
     angles = np.asarray(body_sample["angles"], dtype=float)
     contacts = np.asarray(body_sample["contacts"], dtype=float)
@@ -99,7 +125,7 @@ def inject_sensors(model, body_sample, odor_type=0, config=None, efference=None,
             vr=value_rotation/.5
             imu_tilt=max(0.,1.-float(body_sample.get('upright',1.)))
             currents[exc[0]]+=config.value_flow_gain*np.clip(vf,0,4)
-            currents[exc[1]]+=config.energy_gain*hunger
+            currents[exc[1]]+=config.energy_gain*(hunger+deficit)
             currents[exc[1]]+=config.nutrition_gain*float(body_sample.get('food_intake_rate',0))
             signals=(config.value_flow_gain*np.clip(-vf,0,4),
                      config.value_instability_gain*.25*abs(vl),
@@ -109,6 +135,8 @@ def inject_sensors(model, body_sample, odor_type=0, config=None, efference=None,
             for targets,signal in zip(inh,signals):currents[targets]+=signal
             currents[model.regions['oct']]+=config.octopamine_gain*(
                 np.clip(.5-vf,0,4)+.25*abs(vl)+abs(vr)+4*imu_tilt+float(body_sample['touch']))
+            if adaptive:
+                currents[model.regions['oct']]+=2*config.octopamine_gain*float(body_sample.get('odor_novelty',0))
         else:
             value_signal = (config.value_flow_gain * np.clip(value_forward, -4, 4)
                             - config.value_collision_gain * float(body_sample["touch"])
@@ -148,11 +176,15 @@ def inject_sensors(model, body_sample, odor_type=0, config=None, efference=None,
         currents[intent.go]+=config.intent_hunger_gain*hunger+config.intent_curiosity_gain*float(body_sample.get('novelty',0))
         # Weak innate odor valence is an afferent drive, never a turn/target.
         odor_valence=(1.,0.,-1.,0.)[odor_type]
-        odor_need=config.intent_odor_gain*hunger*float(np.clip(np.mean(body_sample['antenna_odor']),0,1))
+        odor_need=config.intent_odor_gain*hunger*float(np.clip(np.mean(antenna),0,2 if adaptive else 1))
         currents[intent.go]+=odor_need*max(0.,odor_valence)
         if config.ecology_enabled:
             prey_odor=np.clip(np.asarray(body_sample.get('prey_odor',[0,0]),float),0,1)
+            prey_odor=prey_odor*modulation[1]*salience
             currents[intent.go]+=1.5*config.intent_odor_gain*hunger*float(prey_odor.mean())
+        if adaptive:
+            currents[intent.go]*=1-config.fatigue_drive_suppression*pressure
+            currents[intent.hold]+=config.intent_fatigue_gain*pressure/(1+2*deficit**2)
         currents[intent.hold]+=config.intent_rest_gain*(1-hunger)
         currents[intent.hold]+=odor_need*max(0.,-odor_valence)
         currents[intent.hold]+=config.feeding_contact_gain*float(body_sample.get('mouth_contact',0))*(.25+hunger)
@@ -185,12 +217,12 @@ def inject_sensors(model, body_sample, odor_type=0, config=None, efference=None,
     odor_currents = np.zeros(len(model.group), dtype=float)
     glomeruli = np.array_split(model.regions["al_glom"], 4)[odor_type]
     left, right = np.array_split(glomeruli, 2)
-    antenna = body_sample["antenna_odor"]
     odor_currents[left] = config.odor_gain * antenna[0]
     odor_currents[right] = config.odor_gain * antenna[1]
     if config.ecology_enabled:
         left,right=np.array_split(np.array_split(model.regions['al_glom'],4)[1],2)
         prey=np.clip(np.asarray(body_sample.get('prey_odor',[0,0]),float),0,1)
+        prey=prey*modulation[1]*salience
         odor_currents[left]=config.odor_gain*prey[0];odor_currents[right]=config.odor_gain*prey[1]
         state=body_sample.get('ecology')
         if state is not None:

@@ -143,6 +143,7 @@ class Simulation:
                           "learning_curve": self.learning_curve[-120:],
                           "neuromodulation": self.motor_learning.summary() if self.motor_learning else None,
                           "intent": intent_status(self.intent,self.body.energy,self.config),
+                          "homeostasis": self._homeostatic_state(),
                           "damaged_leg": self.damaged_leg,
                           "matrix": self.matrix,
                           "motor_rates": self.motor.pool_rates(), "motor_saturation": 0}
@@ -205,6 +206,13 @@ class Simulation:
     def latest(self):
         with self.lock:
             return self.frame.copy()
+
+    def _homeostatic_state(self):
+        fatigue=getattr(getattr(self.body,'ecology_state',None),'fatigue',0.)
+        return dict(enabled=self.config.homeostasis_enabled,
+                    reserve_deficit=round(1-self.body.energy,4),fatigue_pressure=round(fatigue**2,4),
+                    odor_familiarity=np.round(getattr(self.value_filter,'odor_baseline',np.zeros((4,2))),4).tolist(),
+                    odor_change=round(float(getattr(self.value_filter,'odor_change',0.)),4))
 
     def submit(self, command):
         if not isinstance(command, dict):
@@ -364,6 +372,7 @@ class Simulation:
                           "learning_curve": self.learning_curve[-120:],
                           "neuromodulation": self.motor_learning.summary() if self.motor_learning else None,
                           "intent": intent_status(self.intent,self.body.energy,self.config),
+                          "homeostasis": self._homeostatic_state(),
                           "damaged_leg": self.damaged_leg,
                           "matrix": self.matrix,
                           "motor_rates": self.motor.pool_rates(),
@@ -511,16 +520,23 @@ class Simulation:
             sample = self.body.snapshot(self.world, self.contacts)
             filtered_flow = (self.value_filter.update(sample["flow"], block_s)
                              if self.config.phase5_enabled else None)
+            odor_modulation=None
+            if self.config.homeostasis_enabled:
+                odor_modulation=self.value_filter.adapt_odor(sample,block_s,self.config)
+                sample['odor_novelty']=self.value_filter.odor_change
             inject_sensors(self.model, sample, config=self.config,
-                           efference=torques, value_flow=filtered_flow)
+                           efference=torques, value_flow=filtered_flow,
+                           odor_modulation=odor_modulation)
             if self.odor_end_ms:
                 channels = np.array_split(self.model.regions["al_glom"], 4)[0]
                 self.model.group.I_odor[channels] += self.odor_pulse
         if self.motor_learning:
             self.motor_learning.update(count, block_s, enabled=self.plasticity)
+            fatigue=getattr(getattr(self.body,'ecology_state',None),'fatigue',0.)
+            arousal=1-self.config.fatigue_drive_suppression*fatigue**2 if self.config.homeostasis_enabled else 1.
             self.model.group.noise = self.noise * float(np.clip(
-                0.5 + self.config.octopamine_gain * self.motor_learning.oct_fast / 15.0,
-                0.4, 2.5))
+                arousal*(0.5 + self.config.octopamine_gain * self.motor_learning.oct_fast / 15.0),
+                .1 if self.config.homeostasis_enabled else .4, 2.5))
         if self.intent is not None:
             from .intent import update_rates
             update_rates(self.intent,count,block_s)
@@ -624,7 +640,7 @@ class Simulation:
         if (state["seed"], state["scale"], state["phase5_enabled"], state["reward_mode"]) != (
                 self.config.seed, self.config.scale, self.config.phase5_enabled, self.reward_mode):
             raise ValueError("configuração incompatível com checkpoint")
-        if "config" in state and state["config"] != self.config:
+        if "config" in state and replace(state["config"],homeostasis_enabled=self.config.homeostasis_enabled) != self.config:
             raise ValueError("parâmetros incompatíveis com checkpoint")
         if (len(state["weights"]) != len(self.model.synapses)
                 or len(state["neural"]["v"]) != len(self.model.group)

@@ -23,3 +23,11 @@ O fluxo óptico e a odometria física são modalidades separadas. Regiões sem c
 `intent.py` contém a competição neural que modula a liberação dos motores. Energia, estímulos, contato oral e ameaça alteram correntes neurais; movimento não é selecionado por um comando de velocidade do navegador. `ecology.py` e `maintenance.py` acrescentam presas, poeira, fadiga e circuitos experimentais. Esses mecanismos ainda não demonstram caça, limpeza ou busca de abrigo confiáveis.
 
 `world.py` mantém alimento e odor no referencial do mundo. `server.py` publica snapshots e recebe comandos; `mjviser_bridge.py` desenha o estado do MuJoCo em um viewer separado.
+
+## Regulação fisiológica contínua
+
+`ValueFlowFilter` em `sensory.py` mantém também a linha de base de quatro canais olfatórios bilaterais, com constante de tempo configurável. Essa memória só avança no tick simulado e é armazenada no checkpoint por `value_flow_extra`. Consultar ou renderizar snapshots não avança a habituação.
+
+A curva de necessidade energética permanece monotônica em toda a reserva. A fadiga atenua aferências de ativação e aumenta a aferência para a população descendente supressora; a competição continua neuronal. No circuito de manutenção, a reserva real e a fadiga substituem a supressão de repouso por fome saturada. O ruído continua modulado pelos disparos de octopamina, agora também limitado pela fadiga. Não há mudança de topologia neural, massas, articulações ou taxa-base de aprendizagem.
+
+O caminho anterior permanece selecionável pelo flag `homeostasis_enabled=False`. O carregamento de checkpoints admite a migração desse flag sem relaxar a validação dos outros parâmetros ou da topologia.

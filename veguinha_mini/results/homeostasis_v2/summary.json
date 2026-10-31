@@ -1,0 +1,460 @@
+{
+  "odor": {
+    "initial_gain": 0.997385133967784,
+    "familiar_gain": 0.4894899602091548,
+    "recovered_gain": 0.9904604116066389,
+    "steady_change": 0.004716562899360954
+  },
+  "curve": [
+    {
+      "energy": 1,
+      "old": 0.0,
+      "new": 0.0
+    },
+    {
+      "energy": 0.95,
+      "old": 1.0,
+      "new": 0.5250000000000002
+    },
+    {
+      "energy": 0.8,
+      "old": 1.0,
+      "new": 0.8400000000000001
+    },
+    {
+      "energy": 0.5,
+      "old": 1.0,
+      "new": 0.9545454545454545
+    },
+    {
+      "energy": 0.1,
+      "old": 1.0,
+      "new": 0.9947368421052631
+    },
+    {
+      "energy": 0,
+      "old": 1.0,
+      "new": 1.0
+    }
+  ],
+  "reduced": {
+    "engine": "Brian2 Cython; descending competition and motor permission, no body",
+    "rows": [
+      {
+        "seed": 42,
+        "enabled": false,
+        "condition": "fresh",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 57.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 42,
+        "enabled": false,
+        "condition": "tired",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5
+      },
+      {
+        "seed": 42,
+        "enabled": false,
+        "condition": "recovered",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 8.299198692999198
+      },
+      {
+        "seed": 42,
+        "enabled": true,
+        "condition": "fresh",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 37.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 42,
+        "enabled": true,
+        "condition": "tired",
+        "go_current": 2.7289828125000013,
+        "hold_current": 15.740298507462683,
+        "go_hz": 0.0,
+        "hold_hz": 52.5,
+        "motor_hz": 0.0
+      },
+      {
+        "seed": 42,
+        "enabled": true,
+        "condition": "recovered",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 32.5,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 4.850038770004176
+      },
+      {
+        "seed": 43,
+        "enabled": false,
+        "condition": "fresh",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 57.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 43,
+        "enabled": false,
+        "condition": "tired",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5
+      },
+      {
+        "seed": 43,
+        "enabled": false,
+        "condition": "recovered",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 4.574974154995289
+      },
+      {
+        "seed": 43,
+        "enabled": true,
+        "condition": "fresh",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 37.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 43,
+        "enabled": true,
+        "condition": "tired",
+        "go_current": 2.7289828125000013,
+        "hold_current": 15.740298507462683,
+        "go_hz": 0.0,
+        "hold_hz": 52.5,
+        "motor_hz": 0.0
+      },
+      {
+        "seed": 43,
+        "enabled": true,
+        "condition": "recovered",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 32.5,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 4.595371692004846
+      },
+      {
+        "seed": 44,
+        "enabled": false,
+        "condition": "fresh",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 57.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 44,
+        "enabled": false,
+        "condition": "tired",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5
+      },
+      {
+        "seed": 44,
+        "enabled": false,
+        "condition": "recovered",
+        "go_current": 19.8,
+        "hold_current": 0.0,
+        "go_hz": 60.0,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 4.612861847010208
+      },
+      {
+        "seed": 44,
+        "enabled": true,
+        "condition": "fresh",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 37.5,
+        "hold_hz": 0.0,
+        "motor_hz": 13.75
+      },
+      {
+        "seed": 44,
+        "enabled": true,
+        "condition": "tired",
+        "go_current": 2.7289828125000013,
+        "hold_current": 15.740298507462683,
+        "go_hz": 0.0,
+        "hold_hz": 52.5,
+        "motor_hz": 0.0
+      },
+      {
+        "seed": 44,
+        "enabled": true,
+        "condition": "recovered",
+        "go_current": 10.915931250000005,
+        "hold_current": 3.799999999999998,
+        "go_hz": 32.5,
+        "hold_hz": 0.0,
+        "motor_hz": 12.5,
+        "real_s_for_3p6_sim": 5.093254847000935
+      }
+    ]
+  },
+  "full": {
+    "device": "25078PC3EG",
+    "same_initial_state": true,
+    "rows": [
+      {
+        "enabled": false,
+        "condition": "normal",
+        "real_s": 8.048180539000896,
+        "sim_s": 0.4,
+        "motor_hz": 4.071180555555555,
+        "go_hz": 70.27777777777777,
+        "hold_hz": 0.0,
+        "last_window_displacement_m": 0.011332562880216892,
+        "upright": 0.9989551014416045,
+        "energy": 0.19919528236263964,
+        "fatigue": 0.25797474592710196,
+        "homeostasis": {
+          "enabled": false,
+          "reserve_deficit": 0.8008,
+          "fatigue_pressure": 0.0666,
+          "odor_familiarity": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0
+        }
+      },
+      {
+        "enabled": false,
+        "condition": "tired",
+        "real_s": 21.80990123200172,
+        "sim_s": 1.2,
+        "motor_hz": 4.149305555555555,
+        "go_hz": 82.77777777777777,
+        "hold_hz": 0.0,
+        "last_window_displacement_m": 0.012764187656449148,
+        "upright": 0.9987716048022048,
+        "energy": 0.9371921357493818,
+        "fatigue": 1.0,
+        "homeostasis": {
+          "enabled": false,
+          "reserve_deficit": 0.0628,
+          "fatigue_pressure": 1.0,
+          "odor_familiarity": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0
+        }
+      },
+      {
+        "enabled": false,
+        "condition": "recovered",
+        "real_s": 24.045536923993495,
+        "sim_s": 1.2,
+        "motor_hz": 3.611111111111111,
+        "go_hz": 64.09722222222223,
+        "hold_hz": 0.0,
+        "last_window_displacement_m": 0.00798562378001126,
+        "upright": 0.9990478663245096,
+        "energy": 0.934746750453129,
+        "fatigue": 0.004750465974768344,
+        "homeostasis": {
+          "enabled": false,
+          "reserve_deficit": 0.0653,
+          "fatigue_pressure": 0.0,
+          "odor_familiarity": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0
+        }
+      },
+      {
+        "enabled": true,
+        "condition": "normal",
+        "real_s": 11.571251155008213,
+        "sim_s": 0.4,
+        "motor_hz": 4.262152777777778,
+        "go_hz": 67.70833333333333,
+        "hold_hz": 0.0,
+        "last_window_displacement_m": 0.007103522870957873,
+        "upright": 0.9972649480984299,
+        "energy": 0.19872040116135864,
+        "fatigue": 0.2581341943043557,
+        "homeostasis": {
+          "enabled": true,
+          "reserve_deficit": 0.8013,
+          "fatigue_pressure": 0.0666,
+          "odor_familiarity": [
+            [
+              0.0002,
+              0.0002
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0038
+        }
+      },
+      {
+        "enabled": true,
+        "condition": "tired",
+        "real_s": 30.06423631000507,
+        "sim_s": 1.2,
+        "motor_hz": 0.1388888888888889,
+        "go_hz": 28.819444444444443,
+        "hold_hz": 57.083333333333336,
+        "last_window_displacement_m": 0.010624830601937708,
+        "upright": 0.9996923539537886,
+        "energy": 0.9441356293392865,
+        "fatigue": 0.9998538693647272,
+        "homeostasis": {
+          "enabled": true,
+          "reserve_deficit": 0.0559,
+          "fatigue_pressure": 0.9997,
+          "odor_familiarity": [
+            [
+              0.0007,
+              0.0006
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0033
+        }
+      },
+      {
+        "enabled": true,
+        "condition": "recovered",
+        "real_s": 20.524037462004344,
+        "sim_s": 1.2,
+        "motor_hz": 4.661458333333333,
+        "go_hz": 48.958333333333336,
+        "hold_hz": 0.0,
+        "last_window_displacement_m": 0.013006594276168067,
+        "upright": 0.9989620578702721,
+        "energy": 0.9322827530274471,
+        "fatigue": 0.00558750897238443,
+        "homeostasis": {
+          "enabled": true,
+          "reserve_deficit": 0.0677,
+          "fatigue_pressure": 0.0,
+          "odor_familiarity": [
+            [
+              0.0012,
+              0.0009
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "odor_change": 0.0028
+        }
+      }
+    ]
+  },
+  "targeted_tests": 23
+}

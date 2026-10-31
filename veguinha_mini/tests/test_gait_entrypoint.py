@@ -18,9 +18,14 @@ class GaitEntrypointTests(unittest.TestCase):
         self.assertEqual(config.dt_ms,.5)
         self.assertTrue(config.phase5_enabled)
         self.assertTrue(config.neural_value_channels)
+        self.assertTrue(config.homeostasis_enabled)
         self.assertEqual(config.motor_plastic_scope,'afferent_dn_interleg')
         self.assertTrue(sim.paused)
         self.assertTrue(sim.frame['paused'])
+
+    def test_legacy_homeostasis_remains_available_for_paired_controls(self):
+        config,_=self.launch('--body-model','mk1','--legacy-homeostasis')
+        self.assertFalse(config.homeostasis_enabled)
 
     def test_phase4_preserves_frozen_reference(self):
         config,_=self.launch('--body-model','mk1','--phase4')

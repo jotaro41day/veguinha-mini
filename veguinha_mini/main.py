@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--motor-circuit",choices=("auto","legacy","modular"),default="auto",help="auto usa o VNC corrigido ao servir mk1 na escala1; legacy preserva o controle")
     parser.add_argument("--start-paused",action="store_true",help="abre o laboratório pausado, sem executar a rede")
     parser.add_argument('--checkpoint',help='retoma checkpoint local confiável compatível')
+    parser.add_argument('--legacy-homeostasis',action='store_true',help='preserva os ganhos homeostáticos anteriores para controles')
     args = parser.parse_args()
     circuit=args.motor_circuit
     if circuit=='auto':
@@ -37,6 +38,7 @@ def main():
                     foveated_enabled=motor_learning,
                     vision_workers=4 if motor_learning else 1,
                     somatic_enabled=motor_learning,pruning_enabled=motor_learning,
+                    homeostasis_enabled=motor_learning and not args.legacy_homeostasis,
                     vision_width=320 if motor_learning else 48,vision_height=180 if motor_learning else 24,
                     vision_interval_ms=480 if motor_learning else 100,
                     vision_periphery_ms=120 if motor_learning else 100,

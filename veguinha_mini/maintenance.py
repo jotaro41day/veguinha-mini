@@ -56,6 +56,7 @@ class MaintenanceCircuit:
 
     def sense(self,body,state,sample):
         currents=np.zeros(100);need=homeostatic_need(body.energy,self.config.intent_hunger_span)
+        if self.config.homeostasis_enabled:need=1-float(np.clip(body.energy,0,1))
         pain=float(np.clip(np.sum(sample.get('pain',[0,0])),0,1))
         dust=state.dust
         for side in range(2):
@@ -63,7 +64,8 @@ class MaintenanceCircuit:
             currents[self.exc[side]]=18*local
             currents[self.inh[side,:2]]+=8*need+15*pain
         currents[self.exc[2]]=12*state.fatigue+4*(1-float(state.light.mean()))
-        currents[self.inh[2,:2]]+=8*float(state.light.mean())+8*need+20*pain
+        comfort=1-state.fatigue**2 if self.config.homeostasis_enabled else 1.
+        currents[self.inh[2,:2]]+=8*float(state.light.mean())*comfort+8*need+20*pain
         prey=np.asarray(sample.get('prey_odor',[0,0]),float)
         currents[self.exc[3]]=8*np.clip(prey.mean(),0,1)+2*(1-need)
         optical=sample.get('optical_flow')

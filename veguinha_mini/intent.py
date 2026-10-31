@@ -74,4 +74,4 @@ def status(intent,energy,config):
     if intent is None:return None
     from .sensory import homeostatic_need
     return dict(zip(('go_hz','hold_hz','gate_hz'),intent.rates.tolist()),
-                need=homeostatic_need(energy,config.intent_hunger_span))
+                need=homeostatic_need(energy,config.intent_hunger_span,config.homeostasis_enabled))

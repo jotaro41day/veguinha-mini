@@ -28,3 +28,7 @@ Esta versão reúne o código atual, os modelos visuais/físicos, os testes e um
 ## Atualização do visual
 
 O visual antigo foi retirado. O controle de duas juntas usa primitivas geométricas e mantém sua física de referência. O mk-1 é um modelo próprio, criado por jotaro41day; não é um asset de terceiros. Caminhada observada e melhoria causada pela plasticidade são avaliações distintas.
+
+## 2026-10-31 — Regulação fisiológica e flexibilidade sensorial
+
+Curva de necessidade com sensibilidade em toda a reserva, pressão neural de fadiga, recuperação de repouso e habituação olfatória bilateral. Novidade sensorial entra em OCT; dor e contato não são atenuados. Mantidos topologia, corpo e taxa-base de aprendizagem. Vinte e três testes focados passaram. Provas reduzidas em três seeds e comparação curta no corpo/rede completos estão em results/homeostasis_v2. Ainda não é demonstração de navegação ou reaprendizagem geral.

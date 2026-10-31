@@ -63,6 +63,12 @@ class Config:
     intent_rest_gain: float = 8.
     intent_curiosity_gain: float = 12.
     intent_pain_gain: float = 40.
+    homeostasis_enabled: bool = False
+    odor_adaptation_tau_s: float = 8.
+    odor_adaptation_strength: float = 1.5
+    homeostatic_odor_gain: float = 1.
+    intent_fatigue_gain: float = 12.
+    fatigue_drive_suppression: float = .75
     vision_width: int = 48
     vision_height: int = 24
     vision_interval_ms: float = 100.
@@ -132,6 +138,10 @@ class Config:
     kc_sparse_limit: float = 0.15
 
     def __post_init__(self):
+        if (not isfinite(self.odor_adaptation_tau_s) or self.odor_adaptation_tau_s<=0
+            or any(not isfinite(v) or v<0 for v in (self.odor_adaptation_strength,self.homeostatic_odor_gain,self.intent_fatigue_gain))
+            or not 0<=self.fatigue_drive_suppression<=1):
+            raise ValueError('parâmetros de regulação homeostática inválidos')
         if type(self.vision_workers) is not int or self.vision_workers not in (1,2,4):raise ValueError('visão aceita 1, 2 ou 4 trabalhadores')
         if any(not isfinite(v) or v<0 for v in (self.taste_gain,self.tactile_gain,self.looming_gain)) or any(len(v)!=3 or any(not isfinite(x) or not 0<=x<=1 for x in v) for v in (self.ball_taste,self.prey_taste)):
             raise ValueError('ganhos/composição sensorial inválidos')
