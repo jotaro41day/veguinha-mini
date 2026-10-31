@@ -28,4 +28,4 @@ O corpo permaneceu estável nas janelas observadas. Isso demonstra flexibilidade
 
 Sem novos grupos neuronais ou projeções; massa, contatos, número de juntas e pesos atuais preservados. Estados dos receptores são salvos em value_flow_extra e reiniciados no novo episódio. Consultas/snapshots não avançam o filtro. O flag homeostasis_enabled e a opção --legacy-homeostasis permitem controles históricos. Checkpoints admitem a migração apenas desse flag; demais diferenças de parâmetros/topologia continuam rejeitadas.
 
-Dados em summary.json; protocolos em reduced_probe.py/full_final.py. Estado vivo em before.pkl e, após instalação, ready.pkl; checkpoints, metadados de sessão e logs ficam locais.
+Dados em summary.json. O protocolo reduzido publicado pode ser repetido pela raiz do repositório com `PYTHONPATH=. python veguinha_mini/results/homeostasis_v2/reduced_probe.py`. A comparação completa usa um checkpoint local de sessão, não incluído; o protocolo local chama-se full_final.py. Estado vivo em before.pkl e, após instalação, ready.pkl; checkpoints, metadados de sessão e logs ficam locais. As medições completas não representam uma execução a partir de pesos novos.
